@@ -43,7 +43,7 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 == Screenshots ==
 
 1. Show some or all of the reviews that you have approved to be shown on your site.
-2. A simple review submission form can be placed anywhere on your site, and will not be displayed publically until YOU give it the okay. An admin menu lets you choose which reviews are real and which are spam.
+2. A simple review submission form can be placed anywhere on your site, and will not be displayed publicly until YOU give it the okay. An admin menu lets you choose which reviews are real and which are spam.
 3. A simple shortcode allows you to post an aggregate review score on any page, which means that Google will display a star-rating whenever your page comes up in a search.
 
 
