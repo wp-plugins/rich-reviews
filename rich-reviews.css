@@ -1,0 +1,130 @@
+.testimonial {
+	width:31%;
+	height:auto;
+	float: left;
+	margin-right: 3.5%;
+}
+.testimonial:last-child {
+	margin-right: 0px;
+}
+
+.testimonial_group:after {
+	float: none;
+	clear: both;
+}
+
+.testimonial .left {
+	float:left !important
+}
+
+.clear {
+	float:none;
+	clear:both;
+}
+
+.testimonial .stars {
+	float:left !important;
+	font-size:20px;
+}
+
+.testimonial h2  {
+	font-size:100%;
+	color:#454545;
+	font-weight:700;
+	display:block;
+	width:48%
+	margin-top: -10px
+}
+
+
+.testimonial h4  {
+	font-size:80%;
+	color:#737272;
+	font-weight:200;
+	font-style:italic;
+	display:block;
+	width:48%
+	margin-left:1%;
+	margin-top:2px;
+}
+
+.testimonial .drop_cap {
+    font-family:Georgia;
+    float: left;
+    color:#888;
+    font-size: 400%;
+    line-height: 45px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-left: 3px;
+    height: 20px;
+}
+
+.testimonial p {
+	color:#292929
+	font-size:70%
+}
+
+.testimonial .read_more {
+	font-size:85%;
+	color:#737272;
+	font-weight:700;
+}
+.testimonial .show_less {
+	font-size:85%;
+	color:#737272;
+	font-weight:700;
+}
+
+.rr_admin_table {
+	border-top: #df2d2d;
+	border-top-width: 10px;
+	border-collapse: collapse;
+}
+.rr_admin_review {
+	background: #f0f0f0;
+	border-color: #df2d2d;
+	border-width: thick;
+	border-collapse: collapse;
+}
+.rr_action {
+	min-width: 80px;
+	vertical-align: text-top;
+	padding-right: 15px;
+	border-color: #df2d2d;
+	border-width: 10px;
+}
+.rr_reviewer {
+	min-width: 200px;
+	max-width: 200px;
+	overflow-x: hidden;
+	vertical-align: text-top;
+	padding-right: 30px;
+}
+.rr_review_content {
+	vertical-align: text-top;
+}
+.rr_review_text {
+}
+.rr_all_review_text {
+}
+.rr_star{
+	color: #ffaf00;
+}
+.rr_small_input {
+	width: 250px;
+	height: 20px;
+}
+.rr_large_input {
+	width: 250px;
+	height: 160px;
+	vertical-align: top;
+}
+.rr_title {
+	font-size: 120%;
+	font-weight: bold;
+}
+.rr_hr {
+	border: 0;
+	width: 80%;
+}
