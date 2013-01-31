@@ -1,8 +1,10 @@
 .testimonial {
 	width:31%;
+	min-width: 150px;
 	height:auto;
 	float: left;
 	margin-right: 3.5%;
+	margin-bottom: 5%;
 }
 .testimonial:last-child {
 	margin-right: 0px;
@@ -20,11 +22,6 @@
 .clear {
 	float:none;
 	clear:both;
-}
-
-.testimonial .stars {
-	float:left !important;
-	font-size:20px;
 }
 
 .testimonial h2  {
@@ -87,6 +84,9 @@
 	border-width: thick;
 	border-collapse: collapse;
 }
+.reviewform {
+	display: block;
+}
 .rr_action {
 	min-width: 80px;
 	vertical-align: text-top;
@@ -104,27 +104,59 @@
 .rr_review_content {
 	vertical-align: text-top;
 }
-.rr_review_text {
-}
-.rr_all_review_text {
-}
+
 .rr_star{
 	color: #ffaf00;
 }
 .rr_small_input {
 	width: 250px;
-	height: 20px;
+	height: 1.1em;
+	margin-bottom: 9px;
 }
 .rr_large_input {
 	width: 250px;
-	height: 160px;
+	height: 6em;
 	vertical-align: top;
+	margin-bottom: 12px;
 }
 .rr_title {
-	font-size: 120%;
+	font-size: 130%;
 	font-weight: bold;
+	line-height: 1em !important;
+	text-transform: uppercase;
+	margin-top: 3%;
+	display: block;
 }
-.rr_hr {
-	border: 0;
-	width: 80%;
+.stars {
+	float:left !important;
+	font-size: 150%;
+	display: block;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	line-height: 1em !important;
+}
+.rr_review_name {
+	line-height: 1em !important;
+	font-style: italic;
+	margin-top: 3%;
+	display: block;
+	float: right;
+	margin-right: 20px !important;
+	font-size: 100%;
+	font-weight: 500;
+}
+.rr_review_text {
+	line-height: 1em !important;
+	color: #777;
+	line-height: 1em !important;
+}
+.rr_all_review_text {
+}
+
+.rr_form_heading {
+	letter-spacing: .1em;
+	font-weight: 100;
+}
+.rr_input_stars {
+	font-size: 150%;
 }

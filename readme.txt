@@ -2,9 +2,9 @@
 Contributors: foxytechnology
 Donate link: http://www.foxytechnology.com
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
-Requires at least: 3.0.1
+Requires at least: 3.4
 Tested up to: 3.5
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,5 +49,20 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 
 == Changelog ==
 
+= 1.1 =
+* Altered CSS to make the reviews and the review form more pretty (Thanks, Andrew!)
+* New, altered CSS allows reviews to properly be displayed and stacked vertically (for example, in a sidebar)
+* Integrated/fixed support for non-English characters (Thanks, IvicaD!)
+* Split menu up into three parts: instructions, pending reviews, and approved reviews
+* New "Approved Reviews" admin menu allows you to view every review you have ever previously approved, and change its status (to pending, or mark it for deletion) at will
+
 = 1.0 =
 * Initial release
+
+== Upgrade Notice ==
+
+= 1.1 =
+This version pretties up the reviews and the form, and fixes the CSS to allow vertical stacking of reviews in, say, a sidebar. Also implements an "approved reviews" menu to view and change the status of previously-approved reviews.
+
+= 1.0 =
+Initial release
