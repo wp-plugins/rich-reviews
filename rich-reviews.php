@@ -135,7 +135,7 @@ class FPRichReviews {
 	}
 	
 	function fp_add_plugin_settings_link($links) {
-		$settings_link = '<a href="options-general.php?page=rich_reviews_settings">Settings</a>';
+		$settings_link = '<a href="options-general.php?page=rich_reviews_settings_main">Settings</a>';
 		array_unshift($links, $settings_link);
 		return $links;
 	}
