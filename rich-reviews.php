@@ -153,8 +153,10 @@ class FPRichReviews {
 				 review_text text,
 				 review_status tinyint(1) DEFAULT '0',
 				 reviewer_ip varchar(15) DEFAULT NULL,
-				PRIMARY KEY (id) CHARACTER SET utf8 COLLATE utf8_general_ci
-		);";
+				PRIMARY KEY (id)
+				)
+				CHARACTER SET utf8
+				COLLATE utf8_general_ci;";
 		dbDelta($sql);
 	}
 	

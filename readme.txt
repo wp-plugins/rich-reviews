@@ -4,7 +4,7 @@ Donate link: http://www.foxytechnology.com
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
 Tested up to: 3.5
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,9 @@ Embed user reviews and Google Rich Snippet ratings anywhere on your site.
 
 == Description ==
 
-With Google Places, Google Plus and Google Local emphasizing the importance of Testimonials.  Reviews are becoming integral for the success of any product or service online.
-
 Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
+
+With Google Places, Google Plus and Google Local emphasizing the importance of Testimonials.  Reviews are becoming integral for the success of any product or service online.
 
 <h4>Rich Snippet Features:</h4>
 
@@ -49,6 +49,9 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 
 == Changelog ==
 
+= 1.2 =
+* Fixed a large bug where the MySQL database was not created properly if plugin was installed fresh, and hence no reviews could be sent, stored, approved, nor displayed! (Thanks, Mik!)
+
 = 1.1 =
 * Altered CSS to make the reviews and the review form more pretty (Thanks, Andrew!)
 * New, altered CSS allows reviews to properly be displayed and stacked vertically (for example, in a sidebar)
@@ -60,6 +63,9 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2 =
+This version is essential, as it fixes a bug where the MySQL database was not created unless the plugin had been installed at version 1.0
 
 = 1.1 =
 This version pretties up the reviews and the form, and fixes the CSS to allow vertical stacking of reviews in, say, a sidebar. Also implements an "approved reviews" menu to view and change the status of previously-approved reviews.
