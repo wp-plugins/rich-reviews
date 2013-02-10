@@ -110,7 +110,6 @@
 }
 .rr_small_input {
 	width: 250px;
-	height: 1.1em;
 	margin-bottom: 9px;
 }
 .rr_large_input {
@@ -134,6 +133,7 @@
 	margin-top: 5%;
 	margin-bottom: 5%;
 	line-height: 1em !important;
+	color: #ffaf00;
 }
 .rr_review_name {
 	line-height: 1em !important;
@@ -159,4 +159,95 @@
 }
 .rr_input_stars {
 	font-size: 150%;
+}
+
+.rr_shortcode_container {
+	background-color: #e0e0e0;
+	color: #000000;
+	padding: 20px; 
+	border-radius: 15px;
+	margin-bottom: 10px;
+}
+.rr_shortcode_name {
+	font-weight: 900;
+	font-size: 130%;
+	padding-bottom: 2px;
+}
+.rr_shortcode_description {
+	margin-left: 2%;
+}
+.rr_shortcode_option_container {
+	margin-left: 3%;
+	margin-top: 5px;
+}
+.rr_shortcode_option_name {
+	font-size: 110%;
+	font-style: italic;
+	font-weight: 600;
+}
+.rr_shortcode_option_text {
+	margin-left: 2%;
+}
+.rr_admin_sidebar {
+	float: right;
+	width: 40%;
+	min-width: 300px;
+	background-color: #3d3017;
+	color: #dadada;
+	border-radius: 5px;
+	padding: 10px; /*  top right bottom left */
+	font-size: 90%;
+	margin: 7px;
+}
+.rr_admin_sidebar_title {
+	font-size: 130%;
+	font-weight: 900;
+	margin-bottom: 4px;
+	color: white;
+}
+.rr_admin_sidebar_text {
+	margin-bottom: 4px;
+}
+ul.rr_admin_sidebar_list {
+	padding: 0px 0px 0px 20px; /*  top right bottom left */
+	margin: 0px;
+	list-style-type: square;
+	font-family: Consolas, Monaco, monospace;
+}
+li.rr_admin_sidebar_list_item {
+	padding: 0px;
+	margin: 0px;
+}
+table.rr_admin_review_table {
+	width: 90%;
+	min-width: 700px;
+	background-color: #e4e4e4;
+	border-radius: 7px;
+}
+tr.rr_admin_review_container {
+	background-color: #f1f1f1;
+}
+
+td.rr_admin_review_actions_container {
+	width: 13%;
+	max-width: 91px;
+	font-size: 80%;
+	vertical-align: text-top;
+}
+td.rr_admin_review_info_container {
+	width: 25%;
+	vertical-align: text-top;
+	padding: 0px;
+}
+td.rr_admin_review_content_container {
+	width: 60%;
+	vertical-align: text-top;
+	padding: 0px;
+}
+
+.rr_admin_review_action {
+	
+}
+.rr_admin_review_stars {
+	color: #ffaf00;
 }
