@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.3
+Version: 1.4
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2
@@ -69,7 +69,7 @@ class FPRichReviews {
 			'rich_reviews_settings_main', 
 			array(&$this, 'fp_render_settings_main_page'),
 			plugin_dir_url( __FILE__ ) . 'fox_logo_16x16.png',
-			'25.11111111'
+			'25.11'
 		);
 		add_submenu_page(
 			'rich_reviews_settings_main', // ID of menu with which to register this submenu
@@ -136,17 +136,17 @@ class FPRichReviews {
 	
 	function fp_load_scripts_styles() {
 		$pluginDirectory = trailingslashit(plugins_url(basename(dirname(__FILE__))));
-        wp_register_script('rich-reviews', $pluginDirectory . 'rich-reviews.js', array('jquery'));
+        wp_register_script('rich-reviews', $pluginDirectory . 'js/rich-reviews.js', array('jquery'));
 		wp_enqueue_script('rich-reviews');
-		wp_register_style('rich-reviews', $pluginDirectory . 'rich-reviews.css');
+		wp_register_style('rich-reviews', $pluginDirectory . 'css/rich-reviews.css');
 		wp_enqueue_style('rich-reviews');
 	}
 	
 	function fp_load_admin_scripts_styles() {
 		$pluginDirectory = trailingslashit(plugins_url(basename(dirname(__FILE__))));
-        wp_register_script('rich-reviews', $pluginDirectory . 'rich-reviews.js', array('jquery'));
+        wp_register_script('rich-reviews', $pluginDirectory . 'js/rich-reviews.js', array('jquery'));
 		wp_enqueue_script('rich-reviews');
-		wp_register_style('rich-reviews', $pluginDirectory . 'rich-reviews.css');
+		wp_register_style('rich-reviews', $pluginDirectory . 'css/rich-reviews.css');
 		wp_enqueue_style('rich-reviews');
 	}
 	
@@ -296,132 +296,29 @@ class FPRichReviews {
 	}
 	
 	function fp_render_pending_reviews_page() {
-		global $wpdb;
-		$output = '';
-		$output .= '<div class="wrap"><h2><img src="' . plugin_dir_url( __FILE__ ) . 'fox_logo_32x32.png" /> Pending Reviews</h2></div>';
-		if (isset($_POST['submitted'])) {
-			if ($_POST['submitted'] == 'Y') {
-				$sql = "SELECT
-						id as `idid`,
-						reviewer_name as `reviewername`,
-						reviewer_ip as `reviewerip` FROM $this->sqltable WHERE review_status=\"0\"";
-				$pendingIDs = $wpdb->get_results($sql, ARRAY_A);
-				foreach ($pendingIDs as $result) {
-					$idid = $result['idid'];
-					if (isset($_POST["updateStatus_$idid"])) {
-						$status = $_POST["updateStatus_$idid"];
-						if ($status != 'limbo') {
-							$output .= $this->fp_update_review_status($result, $status);
-						}
-					}
-				}
-				$output .= '<br>';
-			}
+		if (!current_user_can('manage_options')) {
+			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
-		$pendingReviewsCount = $wpdb->get_var("SELECT COUNT(*) FROM $this->sqltable WHERE review_status=\"0\"");
-		if ($pendingReviewsCount == 0) {
-			$output .= '<p>There are no reviews pending approval.</p>';
-		} else {
-			$sql = "SELECT id as `idid`,
-					date_time as `datetime`,
-					reviewer_name as `reviewername`,
-					reviewer_email as `revieweremail`,
-					review_title as `reviewtitle`,
-					review_rating as `reviewrating`,
-					review_text as `reviewtext`,
-					review_status as `reviewstatus`,
-					reviewer_ip as `reviewerip`,
-					post_id as `postid`,
-					review_category as `reviewcategory` FROM $this->sqltable WHERE review_status=\"0\"";
-			$pendingReviews = $wpdb->get_results($sql, ARRAY_A);
-			
-			$output .= '<form method="post" action="">
-					<input type="hidden" name="submitted" value="Y" />
-					
-					<div class="rr_admin_review_table">
-					<table class="rr_admin_review_table">
-						<tr class="rr_admin_review_container">
-							<td colspan="3"><input name="submitButton" type="submit" value="Submit Changes" /></td>
-						</tr>
-						<tr class="rr_admin_review_container">
-							<td class="rr_admin_review_actions_container"></td>
-							<td class="rr_admin_review_info_container"><b>Reviewer</b></td>
-							<td class="rr_admin_review_content_container"><b>Review Content</b></td>
-						</tr>';
-			foreach($pendingReviews as $result) {
-				$output .= $this->fp_display_admin_review($result);
-			}
-			$output .= '<tr class="rr_admin_review_container">
-						<td colspan="3"><input name="submitButton" type="submit" value="Submit Changes" /></td>
-					</tr>
-					</table>
-					</form>';
-		}
-		echo $output;
+		require_once(dirname(__FILE__) . '/rich-reviews-admin-tables.php');
+		$rich_review_admin_table = new Rich_Reviews_Table();
+		$rich_review_admin_table->prepare_items('pending');
+		echo '<div class="wrap"><h2><img src="' . plugin_dir_url( __FILE__ ) . 'fox_logo_32x32.png" /> Pending Reviews</h2></div>';
+		echo '<form id="form" method="POST">';
+		$rich_review_admin_table->display();
+		echo '</form>';
 	}
 	
 	function fp_render_approved_reviews_page() {
-		global $wpdb;
-		$output = '';
-		$output .= '<div class="wrap"><h2><img src="' . plugin_dir_url( __FILE__ ) . 'fox_logo_32x32.png" /> Approved Reviews</h2></div>';
-		if (isset($_POST['submitted'])) {
-			if ($_POST['submitted'] == 'Y') {
-				$sql = "SELECT
-						id as `idid`,
-						reviewer_name as `reviewername`,
-						reviewer_ip as `reviewerip` FROM $this->sqltable WHERE review_status=\"1\"";
-				$pendingIDs = $wpdb->get_results($sql, ARRAY_A);
-				foreach ($pendingIDs as $result) {
-					$idid = $result['idid'];
-					if (isset($_POST["updateStatus_$idid"])) {
-						$status = $_POST["updateStatus_$idid"];
-						if ($status != 'approve') {
-							$output .= $this->fp_update_review_status($result, $status);
-						}
-					}
-				}
-				$output .= '<br>';
-			}
+		if (!current_user_can('manage_options')) {
+			wp_die( __('You do not have sufficient permissions to access this page.') );
 		}
-		$approvedReviewsCount = $wpdb->get_var("SELECT COUNT(*) FROM $this->sqltable WHERE review_status=\"1\"");
-		if ($approvedReviewsCount == 0) {
-			$output .= 'There are no reviews which have been marked as "approved."';
-		} else {
-			$sql = "SELECT id as `idid`,
-					date_time as `datetime`,
-					reviewer_name as `reviewername`,
-					reviewer_email as `revieweremail`,
-					review_title as `reviewtitle`,
-					review_rating as `reviewrating`,
-					review_text as `reviewtext`,
-					review_status as `reviewstatus`,
-					reviewer_ip as `reviewerip`,
-					post_id as `postid`,
-					review_category as `reviewcategory` FROM $this->sqltable WHERE review_status=\"1\"";
-			$approvedReviews = $wpdb->get_results($sql, ARRAY_A);
-			$output .= '<form method="post" action="">
-					<input type="hidden" name="submitted" value="Y" />
-					
-					<div class="rr_admin_review_table">
-					<table class="rr_admin_review_table">
-						<tr class="rr_admin_review_container">
-							<td colspan="3"><input name="submitButton" type="submit" value="Submit Changes" /></td>
-						</tr>
-						<tr class="rr_admin_review_container">
-							<td class="rr_admin_review_actions_container"></td>
-							<td class="rr_admin_review_info_container"><b>Reviewer</b></td>
-							<td class="rr_admin_review_content_container"><b>Review Content</b></td>
-						</tr>';
-			foreach($approvedReviews as $result) {
-				$output .= $this->fp_display_admin_review($result, $result['reviewstatus']);
-			}
-			$output .= '<tr class="rr_admin_review_container">
-						<td colspan="3"><input name="submitButton" type="submit" value="Submit Changes" /></td>
-					</tr>
-					</table>
-					</form>';
-		}
-		echo $output;
+		require_once(dirname(__FILE__) . '/rich-reviews-admin-tables.php');
+		$rich_review_admin_table = new Rich_Reviews_Table();
+		$rich_review_admin_table->prepare_items('approved');
+		echo '<div class="wrap"><h2><img src="' . plugin_dir_url( __FILE__ ) . 'fox_logo_32x32.png" /> Approved Reviews</h2></div>';
+		echo '<form id="form" method="POST">';
+		$rich_review_admin_table->display();
+		echo '</form>';
 	}
 	
 	function fp_update_review_status($result, $status) {
@@ -448,14 +345,21 @@ class FPRichReviews {
 	}
 	
 	function fp_star_rating_input() {
-		$output = '
+		/*$output = '
 			<span onmouseover="this.style.cursor=\'default\';">
 			  <span id="s1" onclick="starSelection(this.id);"onmouseout="outStar(this.id);"onmouseover="overStar(this.id);">&#9734</span>
 			  <span id="s2" onclick="starSelection(this.id);"onmouseout="outStar(this.id);"onmouseover="overStar(this.id);">&#9734</span>
 			  <span id="s3" onclick="starSelection(this.id);"onmouseout="outStar(this.id);"onmouseover="overStar(this.id);">&#9734</span>
 			  <span id="s4" onclick="starSelection(this.id);"onmouseout="outStar(this.id);"onmouseover="overStar(this.id);">&#9734</span>
 			  <span id="s5" onclick="starSelection(this.id);"onmouseout="outStar(this.id);"onmouseover="overStar(this.id);">&#9734</span>
-			</span>';
+			</span>';*/
+		$output = '<div class="rr_stars_container">
+			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_1"></span>
+			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_2"></span>
+			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_3"></span>
+			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_4"></span>
+			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_5"></span>
+		</div>';
 		return $output;
 	}
 	
@@ -537,22 +441,36 @@ class FPRichReviews {
 			}
 		}
 		if ($displayForm) {
-			$output .= '<form class="reviewform" id="fprr_review_form" method="post" action="">
-			<input type="hidden" name="submitted" value="Y" />
-			<input type="hidden" name="rRating" id="rRating" value="0" />
-			<div class="rr_form_heading">Name (*)</div><div class="right"><input class="rr_small_input" type="text" name="rName" value="' . $rName . '" /></div>
-			<div class="clear"></div>
-			<div class="rr_form_heading">Email</div><div class="right"><input class="rr_small_input" type="text" name="rEmail" value="' . $rEmail . '" /></div>
-			<div class="clear"></div>
-			<div class="rr_form_heading">Review Title (*)</div><div class="right"><input class="rr_small_input" type="text" name="rTitle" value="' . $rTitle . '" /></div>
-			<div class="clear"></div>
-			<div class="rr_form_heading">Rating (*)</div><div class="rr_input_stars">' . $this->fp_star_rating_input() . '</div>
-			<div class="clear"></div>
-			<div class="rr_form_heading">Review Text (*)</div><div class="right"><textarea class="rr_large_input" name="rText"></textarea></div>
-			<div class="clear"></div>
-			<div class="left"><input name="submitButton" type="submit" value="Submit Review" /></div>
-			<div class="clear"></div>
-			</form>';
+			$output .= '<form action="" method="post" class="rr_review_form" id="fprr_review_form">';
+			$output .= '	<input type="hidden" name="submitted" value="Y" />';
+			$output .= '	<input type="hidden" name="rRating" id="rRating" value="0" />';
+			$output .= '	<table class="form_table">';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td class="rr_form_heading rr_required">Name</td>';
+			$output .= '			<td class="rr_form_input"><input class="rr_small_input" type="text" name="rName" value="' . $rName . '" /></td>';
+			$output .= '		</tr>';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td class="rr_form_heading">Email</td>';
+			$output .= '			<td class="rr_form_input"><input class="rr_small_input" type="text" name="rEmail" value="' . $rEmail . '" /></td>';
+			$output .= '		</tr>';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td class="rr_form_heading rr_required">Review Title</td>';
+			$output .= '			<td class="rr_form_input"><input class="rr_small_input" type="text" name="rTitle" value="' . $rTitle . '" /></td>';
+			$output .= '		</tr>';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td class="rr_form_heading rr_required">Rating</td>';
+			$output .= '			<td class="rr_form_input">' . $this->fp_star_rating_input() . '</td>';
+			$output .= '		</tr>';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td class="rr_form_heading rr_required">Review Content</td>';
+			$output .= '			<td class="rr_form_input"><textarea class="rr_large_input" name="rText" rows="10">' . $rText . '</textarea></td>';
+			$output .= '		</tr>';
+			$output .= '		<tr class="rr_form_row">';
+			$output .= '			<td></td>';
+			$output .= '			<td class="rr_form_input rr_required"><input name="submitButton" type="submit" value="Submit Review" /></td>';
+			$output .= '		</tr>';
+			$output .= '	</table>';
+			$output .= '</form>';
 		}
 		return $output;
 	}
@@ -725,14 +643,15 @@ class FPRichReviews {
 	function fp_display_review($review) {
 		$rID        = $review['idid'];
 		$rDateTime  = $review['datetime'];
-		$rName      = $this->fp_nice_output($review['reviewername']);
-		$rEmail     = $this->fp_nice_output($review['revieweremail']);
-		$rTitle     = $this->fp_nice_output($review['reviewtitle']);
+		$rName      = $this->fp_nice_output($review['reviewername'], FALSE);
+		$rEmail     = $this->fp_nice_output($review['revieweremail'], FALSE);
+		$rTitle     = $this->fp_nice_output($review['reviewtitle'], FALSE);
 		$rRatingVal = max(1,intval($review['reviewrating']));
 		$rText      = $this->fp_nice_output($review['reviewtext']);
 		$rStatus    = $review['reviewstatus'];
 		$rIP        = $review['reviewerip'];
 		$rRating = '';
+
 		for ($i=1; $i<=$rRatingVal; $i++) {
 			$rRating .= '&#9733'; // orange star
 		}
@@ -741,19 +660,34 @@ class FPRichReviews {
 		}
 		
 		$output = '<div class="testimonial">
-			<span class="rr_title">' . $rTitle . '</span>
+			<h3 class="rr_title">' . $rTitle . '</h3>
 			<div class="clear"></div>
-			<span class="stars">' . $rRating . '</span>
+			<div class="stars">' . $rRating . '</div>
 			<div class="clear"></div>';
 		$output .= '<div class="rr_review_text"><span class="drop_cap">“</span>' . $rText . '”</div>';
-		$output .= '<span class="rr_review_name"> - ' . $rName . '</span>
+		$output .= '<div class="rr_review_name"> - ' . $rName . '</div>
 			<div class="clear"></div>';
 		$output .= '</div>';
 		return $output;
 	}
 	
-	function fp_nice_output($input) {
-		return str_replace(array('\\', '/'), '', $input);
+	function fp_nice_output($input, $keep_breaks = TRUE) {
+		//echo '<pre>' . $input . '</pre>';
+		//return str_replace(array('\\', '/'), '', $input);
+		if (strpos($input, '\r\n')) {
+			if ($keep_breaks) {
+				while (strpos($input, '\r\n\r\n\r\n')) {
+					// get rid of everything but single line breaks and pretend-paragraphs
+					$input = str_replace(array('\r\n\r\n\r\n'), '\r\n\r\n', $input);
+				}
+				$input = str_replace(array('\r\n'), '<br />', $input);
+			} else {
+				$input = str_replace(array('\r\n'), '', $input);
+			}
+		}
+		$input = str_replace(array('\\', '/'), '', $input);
+
+		return $input;
 	}
 	
 	function fp_cleanInput($input) {

@@ -3,8 +3,8 @@ Contributors: foxytechnology
 Donate link: http://www.foxytechnology.com
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
-Tested up to: 3.5
-Stable tag: 1.3
+Tested up to: 3.6
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,13 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 5. Detailed explanations and examples ensure that you will never be confused as to how to use the plugin!
 
 == Changelog ==
+
+= 1.4 =
+* Some much needed tweaks, such as better displaying data from the database (no more "rnrn"!)
+* VASTLY improved admin menus - now the tried and true WordPress menus you know and love are in Rich Reviews! This means that now you can approve/delete bulk items with much greater ease!
+* Added scss files for easier css maintenance
+* Much better css! I am no longer providing the majority of the styles - instead I will allow whatever theme you currently have installed to do the leg work (as it should be!)
+* Much better javascript!
 
 = 1.3 =
 * Added the much-requested feature of per-page/per-product reviews, as well as adding optional review categories to go along with it
