@@ -1,0 +1,361 @@
+/*.testimonial {
+	width:31%;
+	min-width: 150px;
+	height:auto;
+	float: left;
+	margin-right: 3.5%;
+	margin-bottom: 5%;
+}
+.testimonial:last-child {
+	margin-right: 0px;
+}
+
+.testimonial_group:after {
+	float: none;
+	clear: both;
+}
+
+.testimonial .left {
+	float:left !important
+}
+
+.clear {
+	float:none;
+	clear:both;
+}
+
+.testimonial h2  {
+	font-size:100%;
+	color:#454545;
+	font-weight:700;
+	display:block;
+	width:48%;
+	margin-top: -10px
+}
+
+
+.testimonial h4  {
+	font-size:80%;
+	color:#737272;
+	font-weight:200;
+	font-style:italic;
+	display:block;
+	width:48%;
+	margin-left:1%;
+	margin-top:2px;
+}
+
+.testimonial .drop_cap {
+    font-family:Georgia;
+    float: left;
+    color:#888;
+    font-size: 400%;
+    line-height: 45px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-left: 3px;
+    height: 20px;
+}
+
+.testimonial p {
+	color:#292929;
+	font-size:70%
+}
+
+.testimonial .read_more {
+	font-size:85%;
+	color:#737272;
+	font-weight:700;
+}
+.testimonial .show_less {
+	font-size:85%;
+	color:#737272;
+	font-weight:700;
+}
+
+.rr_admin_table {
+	border-top: #df2d2d;
+	border-top-width: 10px;
+	border-collapse: collapse;
+}
+.rr_admin_review {
+	background: #f0f0f0;
+	border-color: #df2d2d;
+	border-width: thick;
+	border-collapse: collapse;
+}
+.reviewform {
+	display: block;
+}
+.rr_action {
+	min-width: 80px;
+	vertical-align: text-top;
+	padding-right: 15px;
+	border-color: #df2d2d;
+	border-width: 10px;
+}
+.rr_reviewer {
+	min-width: 200px;
+	max-width: 200px;
+	overflow-x: hidden;
+	vertical-align: text-top;
+	padding-right: 30px;
+}
+.rr_review_content {
+	vertical-align: text-top;
+}
+
+.rr_star{
+	color: #ffaf00;
+}
+.rr_small_input {
+	width: 250px;
+	margin-bottom: 9px;
+}
+.rr_large_input {
+	width: 250px;
+	height: 6em;
+	vertical-align: top;
+	margin-bottom: 12px;
+}
+.rr_title {
+	font-size: 130%;
+	font-weight: bold;
+	line-height: 1em !important;
+	text-transform: uppercase;
+	margin-top: 3%;
+	display: block;
+}
+.stars {
+	float:left !important;
+	font-size: 150%;
+	display: block;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	line-height: 1em !important;
+	color: #ffaf00;
+}
+.rr_review_name {
+	line-height: 1em !important;
+	font-style: italic;
+	margin-top: 3%;
+	display: block;
+	float: right;
+	margin-right: 20px !important;
+	font-size: 100%;
+	font-weight: 500;
+}
+.rr_review_text {
+	line-height: 1em !important;
+	color: #777;
+	line-height: 1em !important;
+}
+.rr_all_review_text {
+}
+
+.rr_form_heading {
+	letter-spacing: .1em;
+	font-weight: 100;
+}
+.rr_input_stars {
+	font-size: 150%;
+}*/
+
+.rr_shortcode_container {
+	background-color: #e0e0e0;
+	color: #000000;
+	padding: 20px; 
+	border-radius: 15px;
+	margin-bottom: 10px;
+}
+.rr_shortcode_name {
+	font-weight: 900;
+	font-size: 130%;
+	padding-bottom: 2px;
+}
+.rr_shortcode_description {
+	margin-left: 2%;
+}
+.rr_shortcode_option_container {
+	margin-left: 3%;
+	margin-top: 5px;
+}
+.rr_shortcode_option_name {
+	font-size: 110%;
+	font-style: italic;
+	font-weight: 600;
+}
+.rr_shortcode_option_text {
+	margin-left: 2%;
+}
+.rr_admin_sidebar {
+	float: right;
+	width: 40%;
+	min-width: 300px;
+	background-color: #3d3017;
+	color: #dadada;
+	border-radius: 5px;
+	padding: 10px; 
+	font-size: 90%;
+	margin: 7px;
+}
+.rr_admin_sidebar_title {
+	font-size: 130%;
+	font-weight: 900;
+	margin-bottom: 4px;
+	color: white;
+}
+.rr_admin_sidebar_text {
+	margin-bottom: 4px;
+}
+ul.rr_admin_sidebar_list {
+	padding: 0px 0px 0px 20px; 
+	margin: 0px;
+	list-style-type: square;
+	font-family: Consolas, Monaco, monospace;
+}
+li.rr_admin_sidebar_list_item {
+	padding: 0px;
+	margin: 0px;
+}
+table.rr_admin_review_table {
+	width: 90%;
+	min-width: 700px;
+	background-color: #e4e4e4;
+	border-radius: 7px;
+}
+tr.rr_admin_review_container {
+	background-color: #f1f1f1;
+}
+
+td.rr_admin_review_actions_container {
+	width: 13%;
+	max-width: 91px;
+	font-size: 80%;
+	vertical-align: text-top;
+}
+td.rr_admin_review_info_container {
+	width: 25%;
+	vertical-align: text-top;
+	padding: 0px;
+}
+td.rr_admin_review_content_container {
+	width: 60%;
+	vertical-align: text-top;
+	padding: 0px;
+}
+
+.rr_admin_review_action {
+	
+}
+.rr_admin_review_stars {
+	color: #ffaf00;
+}
+
+// -----
+// ----- Twitter bootstrap star icons
+// -----
+$icon-font-path: '../fonts/';
+$icon-font-name: 'glyphicons-halflings-regular';
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('#{$icon-font-path}#{$icon-font-name}.eot');
+  src: url('#{$icon-font-path}#{$icon-font-name}.eot?#iefix') format('embedded-opentype'),
+       url('#{$icon-font-path}#{$icon-font-name}.woff') format('woff'),
+       url('#{$icon-font-path}#{$icon-font-name}.ttf') format('truetype'),
+       url('#{$icon-font-path}#{$icon-font-name}.svg#glyphicons-halflingsregular') format('svg');
+}
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+.glyphicon-star                   { &:before { content: "\e006"; } }
+.glyphicon-star-empty             { &:before { content: "\e007"; } }
+
+// -----
+// ----- Begin Rich Review styles
+// -----
+
+// Variables
+$input_width: 300px;
+$star_color: blue;
+$star_empty_color: black;
+
+// Review submission form
+.rr_review_form {
+	.form_table {
+		.rr_form_row {
+			vertical-align: top;
+			.rr_form_heading {
+				position: relative;
+				text-align: right;
+				padding-right: 15px;
+			}
+			.rr_required {
+				&:after {
+					content: "*";
+					position: absolute;
+					right: 5px;
+				}
+			}
+			.rr_form_input {
+				padding-bottom: 10px;
+				input[type="text"] {
+					width: $input_width;
+					@media only screen and (max-width: 767px) { width: 0.5 * $input_width; }
+				}
+				textarea {
+					width: $input_width;
+					@media only screen and (max-width: 767px) { width: 0.5 * $input_width; }
+				}
+				input[type="submit"] {
+
+				}
+			}
+		}
+	}
+}
+
+// Review display
+.testimonial_group {
+	clear: both;
+	.testimonial {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		float: left;
+		width: 33.333%;
+		padding: 20px;
+		@media only screen and (max-width: 767px) { width: 100%; min-width: 0;}
+		.rr_title {
+			margin-bottom: 5px;
+		}
+		.stars {
+
+		}
+		.rr_review_text {
+			position: relative;
+			.drop_cap {
+				position: absolute;
+				font-size: 100px;
+				top: -5px;
+				left: -20px;
+				line-height: 100px;
+				zoom: 1;
+				filter: alpha(opacity=25);
+				opacity: 0.25;
+			}
+		}
+		.rr_review_name {
+			text-align: right;
+			padding-right: 10%;
+			font-style: italic;
+		}
+	}
+}
