@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.4
+Version: 1.4.1
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2
@@ -100,24 +100,50 @@ class FPRichReviews {
 	function fp_process_plugin_updates() {
 		global $wpdb;
 		require_once( ABSPATH . 'wp-admin/includes/plugin.php');
-        $plugin_data    = get_plugin_data( __FILE__ );
-        $newest_version = $plugin_data['Version'];
-        $options = get_option($this->fp_admin_options);
-        if (isset($options['version'])) {
-	        $current_version = $options['version'];
-        } else { //we were in version 1.0, now we updated
-	        $current_version = '1.0';
-        }
-        if ($current_version == '1.0') {
-        	$wpdb->query("ALTER TABLE $this->sqltable CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci");
-        }
-        if ($current_version < '1.3') {
-	        $this->fp_update_database();
-        	add_action('admin_notices', array(&$this, 'fp_admin_notices'));
-        }
-        if (($newest_version != $current_version) || ($newest_version == '1.0')) {
-	        update_option($this->fp_admin_options, array('version' => $newest_version));
-        }
+		$plugin_data    = get_plugin_data( __FILE__ );
+		$newest_version = $plugin_data['Version'];
+		$options = get_option($this->fp_admin_options);
+		if (isset($options['version'])) {
+			$current_version = $options['version'];
+		} else { //we were in version 1.0, now we updated
+			$current_version = '1.0';
+		}
+
+		// Legacy checks
+		if ($current_version == '1.0') {
+			$wpdb->query("ALTER TABLE $this->sqltable CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci");
+		}
+		if ($current_version == '1.0' || $current_version == '1.1' || $current_version == '1.2') {
+			$this->fp_update_database();
+			add_action('admin_notices', array(&$this, 'fp_admin_notices'));
+		}
+
+		// New checks. perhaps inefficient but more future-proof
+		if ($current_version != $newest_version) {
+			// We have the versions, now convert them to comparable numbers.
+			// First figure out how much we will have to multiply by.
+			// ........ okay nevermind this was all dumb.
+			//$max_len = 0;
+			//$past_versions = array('1.0', '1.3'); // version strings we used to compare to.
+			//$version_strings = array_merge($past_versions, array($current_version, $newest_version));
+			//foreach ($version_strings as $str) { $max_len = (strlen($str) > $max_len) ? strlen($str) : $max_len; }
+			$sanitycheck = 0;
+			$current_version_string = $current_version;
+			$newest_version_string = $newest_version;
+			while ($sanitycheck < 100 && strlen($current_version_string) != 5) { $current_version_string .= '.0'; $sanitycheck++; }
+			while ($sanitycheck < 100 && strlen($newest_version_string) != 5) { $newest_version_string .= '.0'; $sanitycheck++; }
+			if ($sanitycheck >= 100) { // something has gone horribly wrong, let's just quit.
+				return FALSE;
+			}
+
+			// Okay let's start the version comparing
+			$curr_version = str_replace('.', '', $current_version);
+			$new_version = str_replace('.', '', $newest_version);
+			
+			if (($new_version != $curr_version) || ($newest_version == '1.0')) {
+				update_option($this->fp_admin_options, array('version' => $newest_version));
+			}
+		}
 	}
 	
 	function fp_admin_notices() {
@@ -511,7 +537,7 @@ class FPRichReviews {
 					review_rating as `reviewrating`,
 					review_text as `reviewtext`,
 					review_status as `reviewstatus`,
-					reviewer_ip as `reviewerip` FROM $this->sqltable " . $whereStatement . " " . $limitStatement;
+					reviewer_ip as `reviewerip` FROM $this->sqltable " . $whereStatement . " " . $limitStatement . ' ORDER BY `id` DESC';
 			$results = $wpdb->get_results($sql, ARRAY_A);
 			$ii = 0;
 			$output .= '<div class="testimonial_group">';
@@ -540,7 +566,7 @@ class FPRichReviews {
 					review_rating as `reviewrating`,
 					review_text as `reviewtext`,
 					review_status as `reviewstatus`,
-					reviewer_ip as `reviewerip` FROM $this->sqltable WHERE review_status=\"1\"";
+					reviewer_ip as `reviewerip` FROM $this->sqltable WHERE review_status=\"1\"" . ' ORDER BY `id` DESC';
 			$results = $wpdb->get_results($sql, ARRAY_A);
 			$ii = 0;
 			$output .= '<div class="testimonial_group">';
