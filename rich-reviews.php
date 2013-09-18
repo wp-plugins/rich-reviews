@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.4.1
+Version: 1.4.2
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2

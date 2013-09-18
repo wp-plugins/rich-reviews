@@ -296,6 +296,7 @@ $star_empty_color: black;
 				position: relative;
 				text-align: right;
 				padding-right: 15px;
+				vertical-align: top;
 			}
 			.rr_required {
 				&:after {
@@ -305,6 +306,7 @@ $star_empty_color: black;
 				}
 			}
 			.rr_form_input {
+				vertical-align: top;
 				padding-bottom: 10px;
 				input[type="text"] {
 					width: $input_width;
