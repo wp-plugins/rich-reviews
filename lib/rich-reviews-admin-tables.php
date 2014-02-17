@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * Replicates WP post tables for anything ya want.
+ */
+
 if(!class_exists('WP_List_Table')){
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -107,7 +112,7 @@ class Rich_Reviews_Table extends WP_List_Table {
 	}
 	
 	function process_bulk_action() {
-		global $wpdb, $fpRichReviews;
+		global $wpdb, $richReviews;
 		$output = '';
 		if (isset($_REQUEST['review'])) {
 			$ids = is_array($_REQUEST['review']) ? $_REQUEST['review'] : array($_REQUEST['review']);
@@ -127,13 +132,13 @@ class Rich_Reviews_Table extends WP_List_Table {
 					$output .= $id . ' ';
 					switch ($this_action) {
 						case 'approve':
-							$wpdb->update($fpRichReviews->sqltable, array('review_status' => '1'), array('id' => $id));
+							$wpdb->update($richReviews->sqltable, array('review_status' => '1'), array('id' => $id));
 							break;
 						case 'pending':
-							$wpdb->update($fpRichReviews->sqltable, array('review_status' => '0'), array('id' => $id));
+							$wpdb->update($richReviews->sqltable, array('review_status' => '0'), array('id' => $id));
 							break;
 						case 'delete':
-							$wpdb->query("DELETE FROM $fpRichReviews->sqltable WHERE id=\"$id\"");
+							$wpdb->query("DELETE FROM $richReviews->sqltable WHERE id=\"$id\"");
 							break;
 					}
 				}
@@ -149,7 +154,7 @@ class Rich_Reviews_Table extends WP_List_Table {
 	
 	function prepare_items($flag = 'pending') {
 		$this->flag = $flag;
-		global $wpdb, $fpRichReviews;
+		global $wpdb, $richReviews;
 		//$page = (isset($_GET['page'])) ? esc_attr($_GET['page']) : false;
 		$per_page = 10;
 		$columns = $this->get_columns();
@@ -161,7 +166,7 @@ class Rich_Reviews_Table extends WP_List_Table {
 		$orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'id';
 		$order = (!empty($_GET['order'])) ? $_GET['order'] : 'asc';
 		$orderStatement = ' ORDER BY ' . $orderby . ' ' . $order;
-		$data = $wpdb->get_results("SELECT * FROM $fpRichReviews->sqltable" . $whereStatement . $orderStatement);
+		$data = $wpdb->get_results("SELECT * FROM " . $richReviews->db->sqltable . $whereStatement . $orderStatement);
 		$current_page = $this->get_pagenum();
 		$total_items = count($data);
 		$data = array_slice($data,(($current_page-1)*$per_page),$per_page);
