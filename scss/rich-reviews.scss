@@ -189,6 +189,7 @@
 	margin-left: 2%;
 }
 .rr_admin_sidebar {
+	clear: right;
 	float: right;
 	width: 40%;
 	min-width: 300px;
@@ -197,7 +198,7 @@
 	border-radius: 5px;
 	padding: 10px; 
 	font-size: 90%;
-	margin: 7px;
+	margin: 7px 14px;
 }
 .rr_admin_sidebar_title {
 	font-size: 130%;
@@ -360,4 +361,10 @@ $star_empty_color: black;
 			font-style: italic;
 		}
 	}
+}
+
+.credit-line {
+	float: right;
+	font-size: 8%;
+}
 }

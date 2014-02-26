@@ -4,7 +4,7 @@ Donate link: http://www.foxytechnology.com
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
 Tested up to: 3.8.1
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 5. Detailed explanations and examples ensure that you will never be confused as to how to use the plugin!
 
 == Changelog ==
+
+= 1.5.1 =
+* Database bug fix correcting possible site crashes
+* Added option for credit line
 
 = 1.5.0 =
 * Big update! Complete rewrite of plugin to make it easier to update in the future, and to add more features
@@ -101,4 +105,4 @@ This version is essential, as it fixes a bug where the MySQL database was not cr
 This version pretties up the reviews and the form, and fixes the CSS to allow vertical stacking of reviews in, say, a sidebar. Also implements an "approved reviews" menu to view and change the status of previously-approved reviews.
 
 = 1.0 =
-Initial releaseInitial release
+Initial release

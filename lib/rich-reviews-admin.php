@@ -66,8 +66,8 @@ class RichReviewsAdmin {
 		wp_enqueue_script('rich-reviews');
 		wp_register_style('rich-reviews', trailingslashit($this->parent->plugin_url) . 'css/rich-reviews.css');
 		wp_enqueue_style('rich-reviews');
-		wp_register_style('rich-reviews2', trailingslashit($this->parent->plugin_url) . 'css/rr-old.css');
-		wp_enqueue_style('rich-reviews2');
+		//wp_register_style('rich-reviews2', trailingslashit($this->parent->plugin_url) . 'css/rr-old.css');
+		//wp_enqueue_style('rich-reviews2');
 	}
 	
 	function add_plugin_settings_link($links) {
@@ -85,7 +85,7 @@ class RichReviewsAdmin {
 			Thank you for using Rich Reviews by <a href="http://www.foxytechnology.com">Foxy Technology</a>!
 			</p>
 			
-			<span class="rr_admin_sidebar">
+			<div class="rr_admin_sidebar">
 			<div class="rr_admin_sidebar_title">Shortcode Cheat Sheet</div>
 			<div class="rr_admin_sidebar_text">Make sure you read the detailed descriptions of how these work below, in <span style="font-weight: 600;">Shortcode Usage</span>!</div>
 			<ul class="rr_admin_sidebar_list">
@@ -99,28 +99,25 @@ class RichReviewsAdmin {
 			<li class="rr_admin_sidebar_list_item">[RICH_REVIEWS_SNIPPET]</li>
 			<li class="rr_admin_sidebar_list_item">[RICH_REVIEWS_SNIPPET category="foo"]</li>
 			</ul>
-			</span>';
+			</div>';
+		$output .= '<div class="rr_admin_sidebar">';
+		$output .= '<div class="rr_admin_sidebar_title">Support the developers!</div>';
+		$output .= $this->insert_credit_permission_checkbox();
+		$output .= '</div>';
 		$output .= '<p>
 			This plugin is based around shortcodes. We think that this is the best way to go, as then YOU control where reviews, forms, and snippets are shown - pages, posts, widgets... wherever!
-			</p>
-			<p>
-			There has been a major overhaul in functionality for this plugin! So if you are a past user, make sure you review the following - if you are a new user - welcome! If you require any assistance, have any questions, have any feature requests, or find any bugs, please post them in the <a href="http://wordpress.org/support/plugin/rich-reviews">Wordpress support forum for this plugin</a>!
-			</p>
-			<p style="font-size: 70%">
-			A note about backwards compatibility: If you have been using this plugin since before version 1.3 (when per-page reviews were implemented) then the reviews which were already submitted will have a default category of "none", and will not be attached to any particular page or post. They will still show up in the global reviews, however. Also, I have taken great pains to ensure that all the "old" shortcodes will work in exactly the same way - so even though [RICH_REVIEWS_SHOW_ALL] is now outdated, I have retained its functionality so that your site won\'t break!
 			</p>
 			<p style="font-size: 120%">
 			Please take a moment to <a href="http://wordpress.org/extend/plugins/rich-reviews/">rate and/or review</a> this plugin, and tell people about it - we love hearing feedback, and depend on you to spread the word!
 			</p>';
 		$output .= '<p>
-			Some terminology so that\'s we are all on the same page (no pun intended):
-			<ul style="margin-top: -0.75em;">
+			Some terminology so that we are all on the same page:
+			<ul style="">
 			<li>A <b>global review</b> is a review which applies or belongs to the entire Wordpress site, regardless of the current page or post. You might use global reviews if your users are submitting reviews for a business or entire website.</li>
 			<li>A <b>per-page review</b> is a review which applies to some specific page or post. You might use per-page reviews if, for example, your Wordpress site has various products with a dedicated page or post for each one. Note that reviews users submit will <i>always</i> record the post from which they were submitted, even if you will end up using global reviews! This is to simplify things, so that we don\'t have a bunch of different, confusing shortcodes.</li>
 			</ul>
-			</p>
-			<hr />
-			<h2>Shortcode Usage</h2>
+			</p>';
+		$output .= '<h2>Shortcode Usage</h2>
 			<div class="rr_shortcode_container">
 				<div class="rr_shortcode_name">[RICH_REVIEWS_SHOW]</div>
 				<div class="rr_shortcode_description">
@@ -190,6 +187,7 @@ class RichReviewsAdmin {
 				</div>
 			</div>
 		';
+		
 		echo $output;
 	}
 	
@@ -217,6 +215,82 @@ class RichReviewsAdmin {
 		echo '<form id="form" method="POST">';
 		$rich_review_admin_table->display();
 		echo '</form>';
+	}
+
+	function insert_credit_permission_checkbox() {
+
+		$this->update_credit_permission();
+		$permission = $this->get_option('permission');
+		$permission_val = '';
+		if ($permission == 'checked') {
+			$permission_val = ' checked';
+		}
+
+		$output = '<form action="" method="post" class="credit-option">';
+		$output .= '<input type="hidden" name="update_permission" value="permissionupdate" />';
+		$output .= '<input type="checkbox" name="credit_permission_option" value="checked"' .  $permission_val . ' />';
+		$output .= '<label for="credit_permission_option">We thank you for choosing to use our plugin! We would appreciate it if you allowed us to put our name on the plugin we work so hard to build. If you would like to support us, please check this box and change your permission settings.</label>';
+		$output .= '<br />';
+		$output .= '<input type="submit" value="Change Permission Setting" form_id="credit_permission_option" />';
+		$output .= '</form>';
+
+		return $output;
+	}
+
+	function update_credit_permission() {
+		
+		if (isset($_POST['update_permission']) && $_POST['update_permission'] == 'permissionupdate') {
+			$current_permission = $this->get_option('permission');
+			if (!isset($_POST['credit_permission_option'])) {
+				$permission = '';
+			}
+			else {
+				$permission = 'checked';
+			}
+			$this->update_option('permission', $permission);
+			$_POST['update_permission'] = NULL;
+		}
+	}
+
+	function get_option($opt_name = '') {
+		$options = get_option($this->parent->fp_admin_options);
+
+		// maybe return the whole options array?
+		if ($opt_name == '') {
+			return $options;
+		}
+
+		// are the options already set at all?
+		if ($options == FALSE) {
+			return $options;
+		}
+
+		// the options are set, let's see if the specific one exists
+		if (! isset($options[$opt_name])) {
+			return FALSE;
+		}
+
+		// the options are set, that specific option exists. return it
+		return $options[$opt_name];
+	}
+
+	function update_option($opt_name, $opt_val = '') {
+		// allow a function override where we just use a key/val array
+		if (is_array($opt_name) && $opt_val == '') {
+			foreach ($opt_name as $real_opt_name => $real_opt_value) {
+				$this->update_option($real_opt_name, $real_opt_value);
+			}
+		} else {
+			$current_options = $this->get_option();
+
+			// make sure we at least start with blank options
+			if ($current_options == FALSE) {
+				$current_options = array();
+			}
+
+			$new_option = array($opt_name => $opt_val);
+			update_option($this->parent->fp_admin_options, array_merge($current_options, $new_option));
+		}
 	}
 
 }

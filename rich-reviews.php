@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.0
+Version: 1.5.1
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2
@@ -29,6 +29,7 @@ class RichReviews {
 
 	var $sqltable = 'richreviews';
 	var $fp_admin_options = 'rr_admin_options';
+	var $credit_permission_option = 'rr_credit_permission';
 
 	var $admin;
 	var $db;
@@ -82,7 +83,7 @@ class RichReviews {
 			$wpdb->query("ALTER TABLE " . $this->db->sqltable . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci");
 		}
 		if ($current_version == '1.0' || $current_version == '1.1' || $current_version == '1.2') {
-			$this->update_database();
+			$this->db->create_update_database();
 		}
 
 		// New checks. perhaps inefficient but more future-proof
@@ -101,7 +102,7 @@ class RichReviews {
 			$new_version = str_replace('.', '', $newest_version);
 			
 			if (($new_version != $curr_version) || ($newest_version == '1.0')) {
-				update_option($this->fp_admin_options, array('version' => $newest_version));
+				$this->admin->update_option(array('version' => $newest_version));
 			}
 		}
 	}
@@ -306,6 +307,7 @@ class RichReviews {
 			}
 			$output .= '</div><div class="clear"></div>';
 		}
+		$output .= $this->print_credit();
 
 		return $output;
 	}
@@ -473,44 +475,25 @@ class RichReviews {
 		}
 		return $output;
 	}
-}
 
-
-
-/**
- * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.
- * @author Joost van Veen
- * @version 1.0
- */
-if (!function_exists('dump')) {
-	function dump ($var, $label = 'Dump', $echo = TRUE)
-	{
-		// Store dump in variable
-		ob_start();
-		var_dump($var);
-		$output = ob_get_clean();
-
-		// Add formatting
-		$output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
-		$output = '<pre style="background: #FFFEEF; color: #000; border: 1px dotted #000; padding: 10px; margin: 10px 0; text-align: left;">' . $label . ' => ' . $output . '</pre>';
-
-		// Output
-		if ($echo == TRUE) {
-			echo $output;
+	function print_credit() {
+		$permission = $this->admin->get_option('permission');
+		$output = "";
+		if ($permission === 'checked') {
+			$output = '<div class="credit-line">Supported By: <a href="http://nuancedmedia.com/" rel="nofollow"> Nuanced Media</a>';
+			$output .= '</div>' . PHP_EOL;
+			$output .= '<div class="clear"></div>' . PHP_EOL;
 		}
-		else {
-			return $output;
-		}
+		return $output;
 	}
 }
 
 
-if (!function_exists('dump_exit')) {
-	function dump_exit($var, $label = 'Dump', $echo = TRUE) {
-		dump ($var, $label, $echo);
-		exit;
-	}
-}
+
+
+// Define the "dump" function, a debug helper.
+if (!function_exists('dump')) {function dump ($var, $label = 'Dump', $echo = TRUE){ob_start();var_dump($var);$output = ob_get_clean();$output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);$output = '<pre style="background: #FFFEEF; color: #000; border: 1px dotted #000; padding: 10px; margin: 10px 0; text-align: left;">' . $label . ' => ' . $output . '</pre>';if ($echo == TRUE) {echo $output;}else {return $output;}}}
+if (!function_exists('dump_exit')) {function dump_exit($var, $label = 'Dump', $echo = TRUE) {dump ($var, $label, $echo);exit;}}
 
 
 
@@ -522,4 +505,3 @@ require_once('lib/rich-reviews-db.php');
 
 global $richReviews;
 $richReviews = new RichReviews();
-?>
