@@ -51,6 +51,9 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 
 == Changelog ==
 
+= 1.5.2 =
+* Introducing new dashboard styles
+
 = 1.5.1 =
 * Database bug fix correcting possible site crashes
 * Added option for credit line

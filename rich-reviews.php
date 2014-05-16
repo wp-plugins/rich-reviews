@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.1
+Version: 1.5.2
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2
@@ -24,6 +24,7 @@ Copyright 2013  Ian Fox Douglas  (email : iandouglas@nuancedmedia.com)
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 
 class RichReviews {
 
@@ -264,6 +265,7 @@ class RichReviews {
 	function shortcode_reviews_show($atts) {
 		global $wpdb;
 		global $post;
+		//dump($atts);
 		$output = '';
 		extract(shortcode_atts(
 			array(
@@ -497,9 +499,13 @@ if (!function_exists('dump_exit')) {function dump_exit($var, $label = 'Dump', $e
 
 
 
+if (!class_exists('NMRichReviewsAdminHelper')) {
+    require_once('views/view-helper/admin-view-helper-functions.php');
+}
 
-
-require_once('lib/nmdb.php');
+if (!class_exists('NMDB')) {
+    require_once('lib/nmdb.php');
+}
 require_once('lib/rich-reviews-admin.php');
 require_once('lib/rich-reviews-db.php');
 
