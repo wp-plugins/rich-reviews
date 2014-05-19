@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.2
+Version: 1.5.3
 Author: Foxy Technology
 Author URI: http://www.foxytechnology.com
 License: GPL2
@@ -290,24 +290,33 @@ class RichReviews {
 		// Show the reviews
 		$results = $this->db->get();
 		if (count($results)) {
-			$ii = 0;
+			$review_count = 0;
 			$output .= '<div class="testimonial_group">';
 			foreach($results as $review) {
 				$output .= $this->display_review($review);
-				$ii += 1;
-				if (($ii % 3) == 0) {
+				$review_count += 1;
+				if ($review_count == 3) {
 					// end the testimonial_group
 					$output .= '</div>';
 
 					// clear the floats
 					$output .= '<div class="clear"></div>';
-				}
-				if ($ii % 3 == 0 && $ii != count($results)) {
-					// start a new testimonial group
-					$output .= '<div class="testimonial_group">';
+                    
+                    // do we have more reviews to show?
+                    if ($review_count < count($results)) {
+                        $output .= '<div class="testimonial_group">';
+                    }
+                    
+                    // reset the counter
+                    $review_count = 0;
 				}
 			}
-			$output .= '</div><div class="clear"></div>';
+            // do we need to close a testimonial_group?
+            if ($review_count != 0) {
+                $output .= '</div>';
+                $output .= '<div class="clear"></div>';
+            }
+			
 		}
 		$output .= $this->print_credit();
 
