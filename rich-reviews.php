@@ -1,18 +1,18 @@
 <?php
 /*
 Plugin Name: Rich Reviews
-Plugin URI: http://www.foxytechnology.com/rich-reviews-wordpress-plugin/
+Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.3
+Version: 1.5.4
 Author: Foxy Technology
-Author URI: http://www.foxytechnology.com
+Author URI: http://nuancedmedia.com/
 License: GPL2
 
 
 Copyright 2013  Ian Fox Douglas  (email : iandouglas@nuancedmedia.com)
 
 	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as 
+	it under the terms of the GNU General Public License, version 2, as
 	published by the Free Software Foundation.
 
 	This program is distributed in the hope that it will be useful,
@@ -40,7 +40,7 @@ class RichReviews {
 
 	var $logo_url;
 	var $logo_small_url;
-	
+
 	function __construct() {
 		global $wpdb;
 		$this->sqltable = $wpdb->prefix . $this->sqltable;
@@ -62,7 +62,7 @@ class RichReviews {
 
 		add_filter('widget_text', 'do_shortcode');
 	}
-	
+
 	function init() {
 		$this->process_plugin_updates();
 	}
@@ -101,13 +101,13 @@ class RichReviews {
 			// Okay let's start the version comparing
 			$curr_version = str_replace('.', '', $current_version);
 			$new_version = str_replace('.', '', $newest_version);
-			
+
 			if (($new_version != $curr_version) || ($newest_version == '1.0')) {
 				$this->admin->update_option(array('version' => $newest_version));
 			}
 		}
 	}
-	
+
 	function load_scripts_styles() {
 		$pluginDirectory = trailingslashit(plugins_url(basename(dirname(__FILE__))));
 		wp_register_script('rich-reviews', $pluginDirectory . 'js/rich-reviews.js', array('jquery'));
@@ -138,7 +138,7 @@ class RichReviews {
 		}
 		return $output;
 	}
-	
+
 	function star_rating_input() {
 		$output = '<div class="rr_stars_container">
 			<span class="rr_star glyphicon glyphicon-star-empty" id="rr_star_1"></span>
@@ -149,7 +149,7 @@ class RichReviews {
 		</div>';
 		return $output;
 	}
-	
+
 	function shortcode_reviews_form($atts) {
 		global $wpdb;
 		global $post;
@@ -176,7 +176,7 @@ class RichReviews {
 				$rIP       = $_SERVER['REMOTE_ADDR'];
 				$rPostID   = $post->ID;
 				$rCategory = $this->fp_sanitize($category);
-				
+
 				$newdata = array(
 						'date_time'       => $rDateTime,
 						'reviewer_name'   => $rName,
@@ -261,7 +261,7 @@ class RichReviews {
 		}
 		return $output;
 	}
-	
+
 	function shortcode_reviews_show($atts) {
 		global $wpdb;
 		global $post;
@@ -301,12 +301,12 @@ class RichReviews {
 
 					// clear the floats
 					$output .= '<div class="clear"></div>';
-                    
+
                     // do we have more reviews to show?
                     if ($review_count < count($results)) {
                         $output .= '<div class="testimonial_group">';
                     }
-                    
+
                     // reset the counter
                     $review_count = 0;
 				}
@@ -316,17 +316,17 @@ class RichReviews {
                 $output .= '</div>';
                 $output .= '<div class="clear"></div>';
             }
-			
+
 		}
 		$output .= $this->print_credit();
 
 		return $output;
 	}
-	
+
 	function shortcode_reviews_show_all() {
 		return $this->shortcode_reviews_show(array('num'=>'all'));
 	}
-	
+
 	function shortcode_reviews_snippets($atts) {
 		global $wpdb, $post;
 		$output = '';
@@ -342,7 +342,7 @@ class RichReviews {
 		} else {
 			$whereStatement = "WHERE (review_status=\"1\" and review_category=\"$category\")";
 		}
-		
+
 		$approvedReviewsCount = $wpdb->get_var("SELECT COUNT(*) FROM $this->sqltable " . $whereStatement);
 		$averageRating = 0;
 		if ($approvedReviewsCount != 0) {
@@ -428,7 +428,7 @@ class RichReviews {
 		for ($i=$rRatingVal+1; $i<=5; $i++) {
 			$rRating .= '&#9734'; // white star
 		}
-		
+
 		$output = '<div class="testimonial">
 			<h3 class="rr_title">' . $rTitle . '</h3>
 			<div class="clear"></div>
@@ -440,7 +440,7 @@ class RichReviews {
 		$output .= '</div>';
 		return $output;
 	}
-	
+
 	function nice_output($input, $keep_breaks = TRUE) {
 		//echo '<pre>' . $input . '</pre>';
 		//return str_replace(array('\\', '/'), '', $input);
@@ -459,7 +459,7 @@ class RichReviews {
 
 		return $input;
 	}
-	
+
 	function clean_input($input) {
 		$search = array(
 			'@<script[^>]*?>.*?</script>@si',   // strip out javascript

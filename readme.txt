@@ -1,10 +1,10 @@
 === Rich Reviews ===
 Contributors: foxytechnology, Nuanced Media
-Donate link: http://www.foxytechnology.com
+Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
 Tested up to: 3.8.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,13 +26,10 @@ With Google Places, Google Plus and Google Local emphasizing the importance of T
 * Shows aggregate reviews microformat (hReview-aggregate) so that site ratings are viewed in Google results with Google Rich Snippets.
 * Minimalist, lightweight, and efficient code means that your users won’t notice any hiccups.
 
-<h4>Try it out!</h4>
-
-If you want to see for yourself what Rich Reviews has to offer, check out the demo pages <a href="http://www.foxytechnology.com/review-foxy-tech/">here</a>, <a href="http://www.foxytechnology.com/foxy-reviews-all/">here</a>, and <a href="http://www.foxytechnology.com/foxy-tech-reviews/">here</a>!
 
 <h4>More Information</h4>
 
-Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/">Rich Reviews</a> for more information about Rich Reviews.
+Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich Reviews</a> for more information about Rich Reviews.
 
 == Installation ==
 
@@ -50,6 +47,9 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 5. Detailed explanations and examples ensure that you will never be confused as to how to use the plugin!
 
 == Changelog ==
+
+= 1.5.4 =
+* Removing foxytech links
 
 = 1.5.3 =
 * Bug fix: correcting popular display issue
