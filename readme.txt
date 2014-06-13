@@ -1,10 +1,10 @@
 === Rich Reviews ===
-Contributors: foxytechnology
-Donate link: http://www.foxytechnology.com
+Contributors: foxytechnology, Nuanced Media
+Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
-Tested up to: 3.6
-Stable tag: 1.4.2
+Tested up to: 3.8.1
+Stable tag: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Embed user reviews and Google Rich Snippet ratings anywhere on your site.
 
 == Description ==
 
-Rich Reviews empowers you to easily capture user reviews for your business, website, or individual products/pages and display them on your Wordpress page or post and in Google Search Results as a Google Rich Snippet.
+Rich Reviews empowers you to easily capture user reviews for your business, website, or individual products/pages and display them on your Wordpress page or post.
 
 With Google Places, Google Plus and Google Local emphasizing the importance of Testimonials.  Reviews are becoming integral for the success of any product or service online.
 
@@ -26,13 +26,10 @@ With Google Places, Google Plus and Google Local emphasizing the importance of T
 * Shows aggregate reviews microformat (hReview-aggregate) so that site ratings are viewed in Google results with Google Rich Snippets.
 * Minimalist, lightweight, and efficient code means that your users won’t notice any hiccups.
 
-<h4>Try it out!</h4>
-
-If you want to see for yourself what Rich Reviews has to offer, check out the demo pages <a href="http://www.foxytechnology.com/review-foxy-tech/">here</a>, <a href="http://www.foxytechnology.com/foxy-reviews-all/">here</a>, and <a href="http://www.foxytechnology.com/foxy-tech-reviews/">here</a>!
 
 <h4>More Information</h4>
 
-Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/">Rich Reviews</a> for more information about Rich Reviews.
+Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich Reviews</a> for more information about Rich Reviews.
 
 == Installation ==
 
@@ -50,6 +47,30 @@ Visit the <a href="http://www.foxytechnology.com/rich-reviews-wordpress-plugin/"
 5. Detailed explanations and examples ensure that you will never be confused as to how to use the plugin!
 
 == Changelog ==
+
+= 1.5.6 =
+* Removing a debug dump function that was accidentally left it.
+
+= 1.5.5 =
+* Correcting admin page errors.
+
+= 1.5.4 =
+* Removing foxytech links
+
+= 1.5.3 =
+* Bug fix: correcting popular display issue
+
+= 1.5.2 =
+* Introducing new dashboard styles
+
+= 1.5.1 =
+* Database bug fix correcting possible site crashes
+* Added option for credit line
+
+= 1.5.0 =
+* Big update! Complete rewrite of plugin to make it easier to update in the future, and to add more features
+* We are now branching to add Nuanced Media as a developer of this plugin
+* Everything about the plugin should function better, and with the rewrite and addition of Nuanced Media as a contributer, the updates should come much faster
 
 = 1.4.2 =
 * Hotfix: vertical-align: top on the review submission form
