@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.5
+Version: 1.5.6
 Author: Foxy Technology
 Author URI: http://nuancedmedia.com/
 License: GPL2
@@ -259,14 +259,12 @@ class RichReviews {
 			$output .= '	</table>';
 			$output .= '</form>';
 		}
-		dump(esc_html($output));
 		return $output;
 	}
 
 	function shortcode_reviews_show($atts) {
 		global $wpdb;
 		global $post;
-		//dump($atts);
 		$output = '';
 		extract(shortcode_atts(
 			array(
@@ -319,9 +317,7 @@ class RichReviews {
             }
 
 		}
-		dump(esc_html($output));
 		$output .= $this->print_credit();
-		//dump(esc_html($output));
 		return $output;
 	}
 
