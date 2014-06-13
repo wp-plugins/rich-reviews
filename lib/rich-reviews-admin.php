@@ -9,7 +9,7 @@ class RichReviewsAdmin {
 
 	var $parent;
 	var $db;
-	
+
 	function __construct($parent) {
 		$this->parent = $parent;
 		$this->db = $this->parent->db;
@@ -17,7 +17,7 @@ class RichReviewsAdmin {
 		add_action( 'admin_enqueue_scripts', array(&$this, 'load_admin_scripts_styles'), 100);
 		add_filter('plugin_action_links_rich-reviews/rich-reviews.php', array(&$this, 'add_plugin_settings_link'));
 	}
-	
+
 	function init_admin_menu() {
 		global $wpdb;
 		$pendingReviewsCount = $this->db->pending_reviews_count();
@@ -30,7 +30,7 @@ class RichReviewsAdmin {
 			'Rich Reviews Settings',
 			'Rich Reviews' . $pendingReviewsText,
 			'administrator',
-			'rich_reviews_settings_main', 
+			'rich_reviews_settings_main',
 			array(&$this, 'render_settings_main_page'),
 			$this->parent->logo_small_url,
 			'25.11'
@@ -60,7 +60,7 @@ class RichReviewsAdmin {
 			array(&$this, 'render_approved_reviews_page')
 		);
 	}
-	
+
 	function load_admin_scripts_styles() {
         wp_register_script('rich-reviews', trailingslashit($this->parent->plugin_url) . 'js/rich-reviews.js', array('jquery'));
 		wp_enqueue_script('rich-reviews');
@@ -71,7 +71,7 @@ class RichReviewsAdmin {
 		//wp_register_style('rich-reviews2', trailingslashit($this->parent->plugin_url) . 'css/rr-old.css');
 		//wp_enqueue_style('rich-reviews2');
 	}
-    
+
     function wrap_admin_page($page = null) {
         echo '<div class="wrap"><h2><img src="' . $this->parent->logo_url . '" /> Pending Reviews</h2></div>';
         NMRichReviewsAdminHelper::render_tabs();
@@ -100,18 +100,18 @@ class RichReviewsAdmin {
             NMRichReviewsAdminHelper::render_postbox_open("Support the Staff");
             echo $this->insert_credit_permission_checkbox();
             NMRichReviewsAdminHelper::render_postbox_close();
-        } 
+        }
         NMRichReviewsAdminHelper::render_sidebar();
         NMRichReviewsAdminHelper::render_container_close();
         echo '<div class="clear"></div>';
     }
-	
+
 	function add_plugin_settings_link($links) {
 		$settings_link = '<a href="admin.php?page=rich_reviews_settings_main">Settings</a>';
 		array_unshift($links, $settings_link);
 		return $links;
 	}
-	
+
 	function render_settings_main_page($wrapped = false) {
         if (!$wrapped) {
             $this->wrap_admin_page('main');
@@ -120,8 +120,8 @@ class RichReviewsAdmin {
 		$output = '';
 		$output .= '<div class="wrap">
 			</div>
-			
-			
+
+
 			<div class="rr_admin_sidebar">
 			<div class="rr_admin_sidebar_title">Shortcode Cheat Sheet</div>
 			<div class="rr_admin_sidebar_text">Make sure you read the detailed descriptions of how these work below, in <span style="font-weight: 600;">Shortcode Usage</span>!</div>
@@ -225,31 +225,31 @@ class RichReviewsAdmin {
 				</div>
 			</div>
 		';*/
-		
+
 		echo $output;
         //NMMeetupAdminHelper::render_postbox_close();
-        
-        
+
+
 	}
-    
+
     function render_shortcode_usage() {
         //NMMeetupAdminHelper::render_postbox_open('Shortcode Usage');
-        
+
         NMRichReviewsAdminHelper::render_postbox_open('[RICH_REVIEWS_SHOW]');
         $this->render_rr_show_content();
         NMRichReviewsAdminHelper::render_postbox_close();
-        
+
         NMRichReviewsAdminHelper::render_postbox_open('[RICH_REVIEWS_FORM]');
         $this->render_rr_form_content();
         NMRichReviewsAdminHelper::render_postbox_close();
-        
+
         NMRichReviewsAdminHelper::render_postbox_open('[RICH_REVIEWS_SNIPPET]');
         $this->render_rr_snippet_content();
         NMRichReviewsAdminHelper::render_postbox_close();
-        
+
         //NMMeetupAdminHelper::render_postbox_close();
     }
-    
+
     function render_rr_show_content() {
         $output = '<div class="rr_shortcode_container">
 				<div class="rr_shortcode_name">[RICH_REVIEWS_SHOW]</div>
@@ -289,7 +289,7 @@ class RichReviewsAdmin {
 			</div>';
         echo $output;
     }
-    
+
     function render_rr_form_content() {
         $output = '<div class="rr_shortcode_container">
 				<div class="rr_shortcode_name">[RICH_REVIEWS_FORM]</div>
@@ -305,7 +305,7 @@ class RichReviewsAdmin {
 			</div>';
         echo $output;
     }
-    
+
     function render_rr_snippet_content() {
         $output = '<div class="rr_shortcode_container">
 				<div class="rr_shortcode_name">[RICH_REVIEWS_SNIPPET]</div>
@@ -315,13 +315,13 @@ class RichReviewsAdmin {
 					You can test your page <a href="http://www.google.com/webmasters/tools/richsnippets">here</a>. Note that Google is vague with exactly how exactly they give search results. It might take some time for the stars to show up next to your page, and it might only show up with specific search terms. The best thing you can do is make sure that the Rich Snippets tool, above, recognizes the star rating on your page, and be patient. We are constantly working to make sure we keep up with Google to ensure these ratings are displayed.
 				</div>
 				<div class="rr_shortcode_option_container">
-					<div class="rr_shortcode_option_name">[RICH_REVIEWS_FORM category="foo"]</div>
+					<div class="rr_shortcode_option_name">[RICH_REVIEWS_SNIPPET category="foo"]</div>
 					<div class="rr_shortcode_option_text">
 						This will display the aggregate (average) score, along with the Rich Snippet markup, for all approved reviews with the category "foo".
 					</div>
 				</div>
 				<div class="rr_shortcode_option_container">
-					<div class="rr_shortcode_option_name">[RICH_REVIEWS_FORM category="page"]</div>
+					<div class="rr_shortcode_option_name">[RICH_REVIEWS_SNIPPET category="page"]</div>
 					<div class="rr_shortcode_option_text">
 						This will display the aggregate (average) score, along with the Rich Snippet markup, for all approved reviews for the current page/post (again, you may equivalently use category="post").
 					</div>
@@ -330,7 +330,7 @@ class RichReviewsAdmin {
 		';
         echo $output;
     }
-	
+
 	function render_pending_reviews_page($wrapped = null) {
         if (!$wrapped) {
             $this->wrap_admin_page('pending');
@@ -346,7 +346,7 @@ class RichReviewsAdmin {
 		$rich_review_admin_table->display();
 		echo '</form>';
 	}
-	
+
 	function render_approved_reviews_page($wrapped) {
         if (!$wrapped) {
             $this->wrap_admin_page('approved');
@@ -388,7 +388,7 @@ class RichReviewsAdmin {
 	}
 
 	function update_credit_permission() {
-		
+
 		if (isset($_POST['update_permission']) && $_POST['update_permission'] == 'permissionupdate') {
 			$current_permission = $this->get_option('permission');
 			if (!isset($_POST['credit_permission_option'])) {
