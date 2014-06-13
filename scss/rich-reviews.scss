@@ -1,3 +1,5 @@
+@import "../views/view-helper/scss/nm-dashboard-style.scss";
+
 /*.testimonial {
 	width:31%;
 	min-width: 150px;
@@ -162,11 +164,11 @@
 }*/
 
 .rr_shortcode_container {
-	background-color: #e0e0e0;
+	//background-color: #e0e0e0;
 	color: #000000;
 	padding: 20px; 
-	border-radius: 15px;
-	margin-bottom: 10px;
+	//border-radius: 15px;
+	//margin-bottom: 10px;
 }
 .rr_shortcode_name {
 	font-weight: 900;
@@ -189,15 +191,16 @@
 	margin-left: 2%;
 }
 .rr_admin_sidebar {
+	clear: right;
 	float: right;
 	width: 40%;
 	min-width: 300px;
-	background-color: #3d3017;
+	background-color: #049477;
 	color: #dadada;
 	border-radius: 5px;
 	padding: 10px; 
 	font-size: 90%;
-	margin: 7px;
+	margin: 7px 14px;
 }
 .rr_admin_sidebar_title {
 	font-size: 130%;
@@ -361,3 +364,9 @@ $star_empty_color: black;
 		}
 	}
 }
+
+.credit-line {
+	float: right;
+	font-size: 8%;
+}
+
