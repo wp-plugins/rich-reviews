@@ -26,10 +26,11 @@ class RichReviewsAdmin {
 		if ($pendingReviewsCount != 0) {
 			$pendingReviewsText = ' (' . $pendingReviewsCount . ')';
 		}
+		$required_role = $this->parent->options->get_option('approve_authority');
 		add_menu_page(
 			'Rich Reviews Settings',
 			'Rich Reviews' . $pendingReviewsText,
-			'administrator',
+			$required_role,
 			'rich_reviews_settings_main',
 			array(&$this, 'render_settings_main_page'),
 			$this->parent->logo_small_url,
@@ -39,7 +40,7 @@ class RichReviewsAdmin {
 			'rich_reviews_settings_main', // ID of menu with which to register this submenu
 			'Rich Reviews - Instructions', //text to display in browser when selected
 			'Instructions', // the text for this item
-			'administrator', // which type of users can see this menu
+			$required_role, // which type of users can see this menu
 			'rich_reviews_settings_main', // unique ID (the slug) for this menu item
 			array(&$this, 'render_settings_main_page') // callback function
 		);
@@ -47,7 +48,7 @@ class RichReviewsAdmin {
 			'rich_reviews_settings_main',
 			'Rich Reviews - Pending Reviews',
 			'Pending Reviews' . $pendingReviewsText,
-			'administrator',
+			$required_role,
 			'fp_admin_pending_reviews_page',
 			array(&$this, 'render_pending_reviews_page')
 		);
@@ -55,9 +56,25 @@ class RichReviewsAdmin {
 			'rich_reviews_settings_main',
 			'Rich Reviews - Approved Reviews',
 			'Approved Reviews',
-			'administrator',
+			$required_role,
 			'fp_admin_approved_reviews_page',
 			array(&$this, 'render_approved_reviews_page')
+		);
+		add_submenu_page(
+			'rich_reviews_settings_main',
+			'Rich Reviews - Options',
+			'Options',
+			$required_role,
+			'fp_admin_options_page',
+			array(&$this, 'render_options_page')
+		);
+		add_submenu_page(
+			'rich_reviews_settings_main',
+			'Rich Reviews - Add/Edit',
+			'Add New Review',
+			$required_role,
+			'fp_admin_add_edit',
+			array(&$this, 'render_add_edit_page')
 		);
 	}
 
@@ -73,9 +90,9 @@ class RichReviewsAdmin {
 	}
 
     function wrap_admin_page($page = null) {
-        echo '<div class="wrap"><h2><img src="' . $this->parent->logo_url . '" /> Pending Reviews</h2></div>';
+        echo '<div class="nm-admin-page wrap"><h2><img src="' . $this->parent->logo_url . '" /> Pending Reviews</h2></div>';
         NMRichReviewsAdminHelper::render_tabs();
-        NMRichReviewsAdminHelper::render_container_open('three-fifths');
+        NMRichReviewsAdminHelper::render_container_open('content-container');
         if ($page == 'main') {
             NMRichReviewsAdminHelper::render_postbox_open('Instructions');
             echo $this->render_settings_main_page(TRUE);
@@ -92,8 +109,18 @@ class RichReviewsAdmin {
             echo $this->render_approved_reviews_page(TRUE);
             NMRichReviewsAdminHelper::render_postbox_close();
         }
+		if ($page == 'options') {
+			NMRichReviewsAdminHelper::render_postbox_open('Options');
+			echo $this->render_options_page(TRUE);
+			NMRichReviewsAdminHelper::render_postbox_close();
+		}
+		if ($page == 'add/edit') {
+			NMRichReviewsAdminHelper::render_postbox_open('Add/Edit');
+			echo $this->render_add_edit_page(TRUE);
+			NMRichReviewsAdminHelper::render_postbox_close();
+		}
         NMRichReviewsAdminHelper::render_container_close();
-        NMRichReviewsAdminHelper::render_container_open('two-fifths');
+        NMRichReviewsAdminHelper::render_container_open('sidebar-container');
         $permission = $this->get_option('permission');
         $this->update_credit_permission();
         if (!$permission == 'checked') {
@@ -141,7 +168,7 @@ class RichReviewsAdmin {
 		$output .= '<div class="rr_admin_sidebar_title">Support the developers!</div>';
 		$output .= $this->insert_credit_permission_checkbox();
 		$output .= '</div>';
-        $output .= '<p>Thank you for using Rich Reviews by Foxy Technology and <a href="http://www.nuancedmedia.com">Naunced Media</a>!</p>';
+        $output .= '<p>Thank you for using Rich Reviews by Foxy Technology and <a href="http://nuancedmedia.com">Nuanced Media</a>!</p>';
 		$output .= '<p>
 			This plugin is based around shortcodes. We think that this is the best way to go, as then YOU control where reviews, forms, and snippets are shown - pages, posts, widgets... wherever!
 			</p>
@@ -226,6 +253,7 @@ class RichReviewsAdmin {
 			</div>
 		';*/
 
+		$output .= '<div class="clear"></div>';
 		echo $output;
         //NMMeetupAdminHelper::render_postbox_close();
 
@@ -336,9 +364,6 @@ class RichReviewsAdmin {
             $this->wrap_admin_page('pending');
             return;
         }
-		if (!current_user_can('manage_options')) {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
-		}
 		require_once('rich-reviews-admin-tables.php');
 		$rich_review_admin_table = new Rich_Reviews_Table();
 		$rich_review_admin_table->prepare_items('pending');
@@ -352,15 +377,86 @@ class RichReviewsAdmin {
             $this->wrap_admin_page('approved');
             return;
         }
-		if (!current_user_can('manage_options')) {
-			wp_die( __('You do not have sufficient permissions to access this page.') );
-		}
 		require_once('rich-reviews-admin-tables.php');
 		$rich_review_admin_table = new Rich_Reviews_Table();
 		$rich_review_admin_table->prepare_items('approved');
 		echo '<form id="form" method="POST">';
 		$rich_review_admin_table->display();
 		echo '</form>';
+	}
+
+	function render_options_page($wrapped) {
+		$options = $this->parent->options->get_option();
+		if (!$wrapped) {
+			$this->wrap_admin_page('options');
+			return;
+		}
+		if (!current_user_can('manage_options')) {
+			wp_die( __('You do not have sufficient permissions to access this page.') );
+		}
+		?>
+		<form id="rr-admin-options-form" action="" method="post">
+			<input type="hidden" name="update" value="rr-update-options">
+
+			<input type="checkbox" name="snippet_stars" value="checked" <?php echo $options['snippet_stars'] ?> />
+			<label for="snippet_stars">Star Snippets - this will change the averge rating displayed in the snippet shortcodeto be stars instead of numerical values.</label>
+			<br />
+			<input type="checkbox" name="show_form_post_title" value="checked" <?php echo $options['show_form_post_title'] ?> />
+			<label for="show_form_post_title">Include Post Titles - this will include the title and a link to the form page for every reviews.</label>
+			<br />
+			<input type="checkbox" name="credit_permission" value="checked" <?php echo $options['credit_permission'] ?> />
+			<label for="credit_permission">Give Credit to Nuanced Media - this option will add a small credit line and a link to Nuanced Media's website to the bottom of your reviews page</label>
+			<br />
+			<input type="checkbox" name="require_approval" value="checked" <?php echo $options['require_approval'] ?> />
+			<label for="require_approval">Require Approval - this sends all new reviews to the pending review page. Unchecking this will automatically publish all reviews as they are submitted.</label>
+			<br />
+			<input type="checkbox" name="show_date" value="checked" <?php echo $options['show_date'] ?> />
+			<label for="show_date">Display the date that the review was submitted inside the review.</label>
+			<br />
+			<input type="color" name="star_color" value="<?php echo $options['star_color'] ?>">
+			<label>Star Color - the color of the stars on reviews</label>
+			<br />
+
+			<select name="reviews_order" value="<?php echo $options['reviews_order'] ?>">
+				<?php
+				if ($options['reviews_order']==="ASC"){ ?><option value="ASC" selected="selected">Oldest First</option><?php }else {?><option value="ASC" >Oldest First</option><?php }
+				if ($options['reviews_order']==="DESC"){ ?><option value="DESC" selected="selected">Newest First</option><?php }else {?><option value="DESC" >Newest First</option><?php }
+				if ($options['reviews_order']==="random"){ ?><option value="random" selected="selected">Randomize</option><?php }else {?><option value="random" >Randomize</option><?php }
+				?>
+			</select>
+			<label for="reviews_order"> Review Display Order</label>
+			<br />
+			<select name="approve_authority">
+				<?php
+				if ($options['approve_authority']==="manage_options"){ ?><option value="manage_options" selected="selected">Admin</option><?php }else {?><option value="manage_options" >Admin</option><?php }
+				if ($options['approve_authority']==="moderate_comments"){ ?><option value="moderate_comments" selected="selected">Editor</option><?php }else {?><option value="moderate_comments" >Editor</option><?php }
+				if ($options['approve_authority']==="edit_published_posts"){ ?><option value="edit_published_posts" selected="selected">author</option><?php }else {?><option value="edit_published_posts" >Author</option><?php }
+				if ($options['approve_authority']==="edit_posts"){ ?><option value="edit_posts" selected="selected">Contributor</option><?php }else {?><option value="edit_posts" >Contributor</option><?php }
+				if ($options['approve_authority']==="read"){ ?><option value="read" selected="selected">Subscriber</option><?php }else {?><option value="read" >Subscriber</option><?php }
+				?>
+			</select>
+			<label for="approve_authority"> Authority level required to Approve Pending Posts</label>
+			<br />
+			<input type="text" name="review_title" value="<?php echo $options['review_title'] ?>">
+			<label>Review Title Text - Upon user request, the ability to change the text on the form from "Review Title" to whatever you would like.</label>
+			<br />
+			<br />
+			<input type="submit" class="button" value="Save Options">
+		</form>
+		<?php
+
+	}
+
+	function render_add_edit_page($wrapped) {
+		$options = $this->parent->options->get_option();
+		if (!$wrapped) {
+			$this->wrap_admin_page('add/edit');
+			return;
+		}
+		if (!current_user_can('manage_options')) {
+			wp_die( __('You do not have sufficient permissions to access this page.') );
+		}
+		$view = new RRAdminAddEdit($this->parent);
 	}
 
 	function insert_credit_permission_checkbox() {
@@ -373,7 +469,7 @@ class RichReviewsAdmin {
 		}
         $output = '<div class="nm-support-box">';
 		$output .= '<form action="" method="post" class="credit-option">';
-		$output .= '<input type="hidden" name="update_permission" value="permissionupdate" />';
+		$output .= '<input type="hidden" name="update_permission" value="rr-update-support" />';
         $output .= '<div class="nm-support-staff-checkbox">';
 		$output .= '<input type="checkbox" name="credit_permission_option" value="checked"' .  $permission_val . ' />';
         $output .= '</div>';

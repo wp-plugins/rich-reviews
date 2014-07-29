@@ -29,8 +29,8 @@
 	color:#454545;
 	font-weight:700;
 	display:block;
-	width:48%
-	margin-top: -10px
+	width:48%;
+	margin-top: -10px;
 }
 
 
@@ -40,7 +40,7 @@
 	font-weight:200;
 	font-style:italic;
 	display:block;
-	width:48%
+	width:48%;
 	margin-left:1%;
 	margin-top:2px;
 }
@@ -58,8 +58,8 @@
 }
 
 .testimonial p {
-	color:#292929
-	font-size:70%
+	color:#292929;
+	font-size:70%;
 }
 
 .testimonial .read_more {
