@@ -1,7 +1,7 @@
 <?php
 
 class NMRichReviewsAdminHelper {
-	
+
 	public static function render_header($title, $echo = TRUE) {
 		global $file;
 		$plugin_data = get_plugin_data( $file);
@@ -20,15 +20,15 @@ class NMRichReviewsAdminHelper {
         NMRichReviewsAdminHelper::render_postbox_open('Review Us');
         NMRichReviewsAdminHelper::insert_review_us();
         NMRichReviewsAdminHelper::render_postbox_close();
-        
+
         NMRichReviewsAdminHelper::render_postbox_open('Nuanced Media');
         NMRichReviewsAdminHelper::render_nm_logos();
         NMRichReviewsAdminHelper::render_postbox_close();
-			
+
 	}
-    
+
     public static function render_nm_logos() {
-        ?> 
+        ?>
             <div class="nm-logo one-fourth">
                 <a href="http://nuancedmedia.com/" target="_blank">
                     <img src="http://nuancedmedia.com/wp-content/uploads/2014/04/nm-logo-black.png" />
@@ -66,7 +66,7 @@ class NMRichReviewsAdminHelper {
             </div>
         <?php
     }
-    
+
     public static function insert_review_us() {
         ?>
             <div class="review-us">
@@ -88,6 +88,8 @@ class NMRichReviewsAdminHelper {
 			'rich_reviews_settings_main' => 'Dashboard',
             'fp_admin_pending_reviews_page' => 'Pending Reviews',
             'fp_admin_approved_reviews_page' => 'Approved Reviews',
+			'fp_admin_options_page' => 'Options',
+			'fp_admin_add_edit' => 'Add Review',
 		);
 
 		// what page did we request?
