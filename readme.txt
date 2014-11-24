@@ -3,8 +3,8 @@ Contributors: foxytechnology, Nuanced Media
 Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 1.5.8
+Tested up to: 3.8.1
+Stable tag: 1.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,13 @@ Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich 
 6. One user shows the versatility of Rich Reviews by placing our shortcodes into various tabs on one of his pages.
 
 == Changelog ==
+
+= 1.5.10 =
+* Fixing issue with extra div creation.
+* Adding link to new plugins website on dashboard.
+
+= 1.5.9 =
+* Hot fix: Correcting the correspondence with Google Rich Snippets.
 
 = 1.5.8 =
 * Hotfix

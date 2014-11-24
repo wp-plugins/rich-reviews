@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.8
+Version: 1.5.10
 Author: Foxy Technology
 Author URI: http://nuancedmedia.com/
 Text Domain: rich-reviews
@@ -37,13 +37,13 @@ class RichReviews {
 	var $db;
 
 	/**
-	 * @var RROptions
-	 */
+	* @var RROptions
+	*/
 	var $options;
 
 	/**
-	 * The variable that stores all current options
-	 */
+	* The variable that stores all current options
+	*/
 	var $rr_options;
 
 	var $plugin_url;
@@ -318,6 +318,7 @@ class RichReviews {
 		// Show the reviews
 		$results = $this->db->get();
 		if (count($results)) {
+			$total_count = count($results);
 			$review_count = 0;
 			$output .= '<div class="testimonial_group">';
 			foreach($results as $review) {
@@ -330,20 +331,21 @@ class RichReviews {
 					// clear the floats
 					$output .= '<div class="clear"></div>';
 
-                    // do we have more reviews to show?
-                    if ($review_count < count($results)) {
-                        $output .= '<div class="testimonial_group">';
-                    }
+					// do we have more reviews to show?
+					if ($review_count < $total_count) {
+						$output .= '<div class="testimonial_group">';
+					}
 
-                    // reset the counter
-                    $review_count = 0;
+					// reset the counter
+					$review_count = 0;
+					$total_count = $total_count - 3;
 				}
 			}
-            // do we need to close a testimonial_group?
-            if ($review_count != 0) {
-                $output .= '</div>';
-                $output .= '<div class="clear"></div>';
-            }
+			// do we need to close a testimonial_group?
+			if ($review_count != 0) {
+				$output .= '</div>';
+				$output .= '<div class="clear"></div>';
+			}
 
 		}
 		$output .= $this->print_credit();
@@ -382,22 +384,36 @@ class RichReviews {
 			$stars = '';
 			$star_count = 0;
 			//dump($averageRating, 'AVE:');
-			while($averageRating >= 1) {
-				$stars = $stars . '&#9733';
-				$star_count++;
-				$averageRating--;
-				//dump($averageRating, 'AVE in WHILE:');
-				//dump($star_count, 'STAR COUNT:');
+			for ($i=1; $i<=5; $i++) {
+				if ($i <= $averageRating) {
+					$stars = $stars . '&#9733';
+				}
+				else {
+					$stars = $stars . '&#9734';
+				}
 			}
-			while ($star_count < 5) {
-				$stars = $stars . '&#9734';
-				$star_count++;
-				//dump($star_count, 'STAR COUNT:');
-			}
-			$output = '<div class="hreview-aggregate">Overall rating: <span class="stars">' . $stars . '</span> based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
+
+			// ----- Old Star handling that broke Google Snippets because
+			// ----- $average rating was being altered.
+
+			// while($averageRating >= 1) {
+			// 	$stars = $stars . '&#9733';
+			// 	$star_count++;
+			// 	$averageRating--;
+			// 	//dump($averageRating, 'AVE in WHILE:');
+			// 	//dump($star_count, 'STAR COUNT:');
+			// }
+			// while ($star_count < 5) {
+			// 	$stars = $stars . '&#9734';
+			// 	$star_count++;
+			// 	//dump($star_count, 'STAR COUNT:');
+			// }
+
+			$output = '<div class="hreview-aggregate">Overall rating: <span class="stars">' . $stars . '</span> <span class="rating" style="display: none !important;">' . $averageRating . '</span> based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 			$this->render_custom_styles();
+		} else {
+			$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 		}
-		else {$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';}
 
 		return __($output, 'rich-reviews');
 	}
@@ -595,11 +611,11 @@ if (!function_exists('dump_exit')) {function dump_exit($var, $label = 'Dump', $e
 
 
 if (!class_exists('NMRichReviewsAdminHelper')) {
-    require_once('views/view-helper/admin-view-helper-functions.php');
+	require_once('views/view-helper/admin-view-helper-functions.php');
 }
 
 if (!class_exists('NMDB')) {
-    require_once('lib/nmdb.php');
+	require_once('lib/nmdb.php');
 }
 if (!class_exists('RROptions')) {
 	require_once('lib/rich-reviews-options.php');

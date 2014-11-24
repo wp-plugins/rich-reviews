@@ -94,6 +94,11 @@ class RichReviewsAdmin {
         NMRichReviewsAdminHelper::render_tabs();
         NMRichReviewsAdminHelper::render_container_open('content-container');
         if ($page == 'main') {
+
+			// NMRichReviewsAdminHelper::render_postbox_open('We Have A New Website');
+			// echo $this->render_new_site_banner();
+			// NMRichReviewsAdminHelper::render_postbox_close();
+
             NMRichReviewsAdminHelper::render_postbox_open('Instructions');
             echo $this->render_settings_main_page(TRUE);
             NMRichReviewsAdminHelper::render_postbox_close();
@@ -537,6 +542,18 @@ class RichReviewsAdmin {
 			$new_option = array($opt_name => $opt_val);
 			update_option($this->parent->fp_admin_options, array_merge($current_options, $new_option));
 		}
+	}
+
+	function render_new_site_banner() {
+		?>
+			<div class="website-link">
+			<p style="width: 80%; float: left;">
+				Recently, we have been dealing with an increase in interest in our plugin development. Our email inboxes have been flooded. We decided that we needed a place to centralize all plugin questions and interests. This lead to the creation of an entirely new site. Please click the link and check out our plugins website, where we can satisfy all of your plugin needs.
+			</p>
+			<a href="http://plugins.nuancedmedia.com/" target="_BLANK" style="width: 20%; float: left; margin-top: 21px;"><button style="padding: 13px; background-color: #049477; border-radius: 5px; color: #ffffff; border: none; width: 100%;">View Plugins Website</button></a>
+			<div style="clear: both; float: none;"></div>
+			</div>
+		<?php
 	}
 
 }

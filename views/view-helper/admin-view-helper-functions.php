@@ -17,6 +17,11 @@ class NMRichReviewsAdminHelper {
 	public static function render_sidebar() {
 		?>
         <?php
+
+		NMRichReviewsAdminHelper::render_postbox_open('Need Help');
+		NMRichReviewsAdminHelper::insert_website_link();
+		NMRichReviewsAdminHelper::render_postbox_close();
+
         NMRichReviewsAdminHelper::render_postbox_open('Review Us');
         NMRichReviewsAdminHelper::insert_review_us();
         NMRichReviewsAdminHelper::render_postbox_close();
@@ -51,11 +56,15 @@ class NMRichReviewsAdminHelper {
                         <g:plusone annotation="inline" width="216" href="http://nuancedmedia.com/"></g:plusone><br>
                         <!-- Place this tag where you want the +1 button to render -->
                         <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-
                     </div>
                 </div>
             </div>
             <div class="clear"></div>
+			<div class="google-plus-container" style="width: 100%; overflow: hidden;">
+				<!-- Google Plus Link -->
+				<script src="https://apis.google.com/js/platform.js" async defer></script>
+				<div class="g-page" data-href="//plus.google.com/u/0/103543858548099057697" data-rel="publisher"></div>
+			</div>
             <div class="nm-plugin-links">
                 <?php NMRichReviewsAdminHelper::render_postbox_open('Rich Reviews Links') ?>
                 <ul class="wp-meetup-link-list">
@@ -163,5 +172,15 @@ class NMRichReviewsAdminHelper {
 			}
 		}
 		echo '<input type="checkbox" name="' . $name .'" value="checked" ' . $checked . '/>';
+	}
+
+
+	public static function insert_website_link() {
+		?>
+			<div class="website-link">
+			<a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/" target="_BLANK"><button style="padding: 13px; background-color: #9f06c6; border-radius: 5px; color: #ffffff; border: none; width: 100%;">Visit Plugins Website</button></a>
+			<a href="http://plugins.nuancedmedia.com/installation-assistance/" target="_BLANK"><button style="padding: 13px; background-color: #069fc6; border-radius: 5px; color: #ffffff; border: none; width: 100%; margin-top: 13px;">Get Installation Assistance</button></a>
+			</div>
+		<?php
 	}
 }
