@@ -3,8 +3,8 @@ Contributors: foxytechnology, Nuanced Media
 Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
-Tested up to: 4.0.1
-Stable tag: 1.5.12
+Tested up to: 4.1.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,7 +29,7 @@ With Google Places, Google Plus and Google Local emphasizing the importance of T
 
 <h4>More Information</h4>
 
-Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich Reviews</a> for more information about Rich Reviews.
+Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich Reviews</a> for more information about Rich Reviews.
 
 == Installation ==
 
@@ -48,6 +48,11 @@ Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich 
 6. One user shows the versatility of Rich Reviews by placing our shortcodes into various tabs on one of his pages.
 
 == Changelog ==
+
+= 1.6.0 =
+* Updated rich snippet format to microdata
+* Added option to display reviews at full width
+* Added option to display date along with reviews
 
 = 1.5.12 =
 * Correcting star display issue.
@@ -134,6 +139,9 @@ Visit the <a href="http://nuancedmedia.com/wordpress-rich-reviews-plugin/">Rich 
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+We updated the "rich snippets" of this plugin to use microdata instead of microformat - microdata is the new hotness and works much better with search engines. This is a big change for us, as the way we rendered meta data had remained the same for the last couple years, and slowly started to lose its applicability. We hope that this change will give greater compatibility between the metadata/rich snippet markup and search result summaries.
 
 = 1.3 =
 This adds the MUCH requested feature of having per-page/per-product reviews, as well as adding optional categories for further customization! The instructions page has also been overhauled to provide useful, relevant explanations and examples for each of the shortcodes.

@@ -409,6 +409,9 @@ class RichReviewsAdmin {
 			<input type="checkbox" name="show_form_post_title" value="checked" <?php echo $options['show_form_post_title'] ?> />
 			<label for="show_form_post_title">Include Post Titles - this will include the title and a link to the form page for every reviews.</label>
 			<br />
+			<input type="checkbox" name="display_full_width" value="checked" <?php echo $options['display_full_width'] ?> />
+			<label for="display_full_width">Display Full width - This option will display the reviews in full width block format. Default will dsplay the reviews in blocks of three.</label>
+			<br />
 			<input type="checkbox" name="credit_permission" value="checked" <?php echo $options['credit_permission'] ?> />
 			<label for="credit_permission">Give Credit to Nuanced Media - this option will add a small credit line and a link to Nuanced Media's website to the bottom of your reviews page</label>
 			<br />

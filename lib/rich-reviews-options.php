@@ -40,15 +40,16 @@ class RROptions {
         }
         $this->options_name = $core->options_name;
         $this->defaults = array(
-      'version' => '1.5.7',
+			'version' => '1.5.7',
             'star_color' => '#ffaf00',
-      'snippet_stars' => FALSE,
-      'reviews_order' => 'asc',
-      'review_title' => 'review title',
-      'approve_authority' => 'manage_options',
-      'require_approval' => 'checked',
-      'show_form_post_title' => FALSE,
-      'credit_permission'=> FALSE,
+			'snippet_stars' => FALSE,
+			'reviews_order' => 'asc',
+			'review_title' => 'review title',
+			'approve_authority' => 'manage_options',
+			'require_approval' => 'checked',
+			'show_form_post_title' => FALSE,
+      'display_full_width' => TRUE,
+			'credit_permission'=> FALSE,
             'show_date' => FALSE,
           );
         if ($this->get_option() == FALSE) {
@@ -68,7 +69,8 @@ class RROptions {
             if (!isset($_POST['snippet_stars'])) { $_POST['snippet_stars'] = NULL; }
             if (!isset($_POST['require_approval'])) { $_POST['require_approval'] = NULL; }
             if (!isset($_POST['show_form_post_title'])) { $_POST['show_form_post_title'] = NULL; }
-      if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = NULL; }
+            if (!isset($_POST['display_full_width'])) { $_POST['display_full_width'] = NULL; }
+			if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = NULL; }
             if (!isset($_POST['show_date'])) { $_POST['show_date'] = NULL; }
             $current_settings = $this->get_option();
             $clean_current_settings = array();
@@ -226,5 +228,5 @@ class RROptions {
              echo '<div class="updated">Thank you for supporting the development team! We really appreciate how awesome you are.</div>';
             $this->updated = FALSE;
         }
-  }
+	}
 }

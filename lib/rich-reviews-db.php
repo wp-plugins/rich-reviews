@@ -30,7 +30,7 @@ class RichReviewsDB extends NMDB {
 				 reviewer_ip varchar(15) DEFAULT NULL,
 				 post_id int(11) DEFAULT '0',
 				 review_category varchar(100) DEFAULT 'none',
-				PRIMARY KEY (id)
+				PRIMARY KEY  (id)
 				)
 				CHARACTER SET utf8
 				COLLATE utf8_general_ci;";
