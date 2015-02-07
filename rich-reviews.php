@@ -3,14 +3,14 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.5.12
+Version: 1.6.0
 Author: Foxy Technology
 Author URI: http://nuancedmedia.com/
 Text Domain: rich-reviews
 License: GPL2
 
 
-Copyright 2013  Ian Fox Douglas  (email : iandouglas@nuancedmedia.com)
+Copyright 2015  Ian Fox Douglas  (email : iandouglas@nuancedmedia.com)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
@@ -409,10 +409,23 @@ class RichReviews {
 			// 	//dump($star_count, 'STAR COUNT:');
 			// }
 
-			$output = '<div class="hreview-aggregate">Overall rating: <span class="stars">' . $stars . '</span> <span class="rating" style="display: none !important;">' . $averageRating . '</span> based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
+		// 	$output = '<div class="hreview-aggregate">Overall rating: <span class="stars">' . $stars . '</span> <span class="rating" style="display: none !important;">' . $averageRating . '</span> based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
+		// 	$this->render_custom_styles();
+		// } else {
+		// 	$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
+		// }
+			$output = '<div itemscope itemtype="http://data-vocabulary.org/Review-aggregate">';
+			$output .= 'Overall rating: <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">';
+			$output .= '<span class="stars">' . $stars . '</span>';
+			$output .= '<span class="rating" itemprop="rating" style="display: none !important;">' . $averageRating . '</span></span>';
+			$output .= ' based on <span class="votes" itemprop="votes">' . $approvedReviewsCount . '</span>';
+			$output .= ' reviews</div>';
 			$this->render_custom_styles();
 		} else {
-			$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
+			$output = '<div itemscope itemtype="http://data-vocabulary.org/Review-aggregate">';
+			$output .= 'Overall rating: <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">';
+			$output .= '<strong><span class="rating" itemprop="rating">' . $averageRating . '</span></strong> out of <strong>5</strong> ';
+			$output .= 'based on <span class="votes" itemprop="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 		}
 
 		return __($output, 'rich-reviews');
@@ -477,6 +490,12 @@ class RichReviews {
 	function display_review($review) {
 		$rID        = $review->id;
 		$rDateTime  = $review->date_time;
+		$date 		= strtotime($rDateTime);
+		$rDay		= date("j", $date);
+		$rMonth		= date("F", $date);
+		$rSuffix	= date("S", $date);
+		$rYear		= date("Y", $date);
+		$rDate 		= $rMonth . ' ' . $rDay . $rSuffix . ', '  . $rYear;
 		$rName      = $this->nice_output($review->reviewer_name, FALSE);
 		$rEmail     = $this->nice_output($review->reviewer_email, FALSE);
 		$rTitle     = $this->nice_output($review->review_title, FALSE);
@@ -494,19 +513,47 @@ class RichReviews {
 			$rRating .= '&#9734;'; // white star
 		}
 
-		$output = '<div class="testimonial">
-			<h3 class="rr_title">' . $rTitle . '</h3>
+		// $output = '<div class="testimonial">
+		// 	<h3 class="rr_title">' . $rTitle . '</h3>
+		// 	<div class="clear"></div>';
+		// if ($this->rr_options['show_form_post_title']) {
+		// 	$output .= '<div class="rr_review_post_id"><a href="' . get_the_permalink($rPostId) . '">' . get_the_title($rPostId) . '</a></div><div class="clear"></div>';
+		// }
+		// $output .= '<div class="stars">' . $rRating . '</div>
+		// 	<div class="clear"></div>';
+		// $output .= '<div class="rr_review_text"><span class="drop_cap">“</span>' . $rText . '”</div>';
+		// $output .= '<div class="rr_review_name"> - ' . $rName . '</div>
+		// 	<div class="clear"></div>';
+		// $output .= '</div>';
+
+		if($this->rr_options['display_full_width'] != NULL) {
+			$output = '<div class="full-testimonial" itemscope itemtype="data-vocabulary.org/Review">
+			<h3 class="rr_title" itemprop="summary">' . $rTitle . '</h3>
 			<div class="clear"></div>';
-		if ($this->rr_options['show_form_post_title']) {
-			$output .= '<div class="rr_review_post_id"><a href="' . get_the_permalink($rPostId) . '">' . get_the_title($rPostId) . '</a></div><div class="clear"></div>';
+		} else {
+			$output = '<div class="testimonial" itemscope itemtype="data-vocabulary.org/Review">
+				<h3 class="rr_title" itemprop="summary">' . $rTitle . '</h3>
+				<div class="clear"></div>';
 		}
-		$output .= '<div class="stars">' . $rRating . '</div>
-			<div class="clear"></div>';
-		$output .= '<div class="rr_review_text"><span class="drop_cap">“</span>' . $rText . '”</div>';
-		$output .= '<div class="rr_review_name"> - ' . $rName . '</div>
+		if ($this->rr_options['show_form_post_title']) {
+			$output .= '<div class="rr_review_post_id" itemprop="itemreviewed"><a href="' . get_the_permalink($rPostId) . '">' . get_the_title($rPostId) . '</a></div><div class="clear"></div>';
+		} else {
+			$output .= '<div class="rr_review_post_id" itemprop="itemreviewed" style="display:none;"><a href="' . get_the_permalink($rPostId) . '">' . get_the_title($rPostId) . '</a></div><div class="clear"></div>';
+		}
+		if ($this->rr_options['show_date']) {
+			$output .= 'Submitted: <time itemprop="startDate" datetime="' . $rDate . '">' . $rDate . '</time>';
+		}
+		$output .= '<div class="stars">' . $rRating . '</div><div style="display:none;" itemprop="rating">' . $rRatingVal . '</div>';
+
+		$output .= '<div class="clear"></div>';
+		$output .= '<div class="rr_review_text" itemprop="description"><span class="drop_cap">“</span>' . $rText . '”</div>';
+		$output .= '<div class="rr_review_name"> - <span itemprop="reviewer">' . $rName . '</span></div>
 			<div class="clear"></div>';
 		$output .= '</div>';
+
 		return __($output, 'rich-reviews');
+
+
 	}
 
 	function nice_output($input, $keep_breaks = TRUE) {
