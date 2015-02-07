@@ -48,7 +48,7 @@ class RROptions {
 			'approve_authority' => 'manage_options',
 			'require_approval' => 'checked',
 			'show_form_post_title' => FALSE,
-      'display_full_width' => TRUE,
+      'display_full_width' => FALSE,
 			'credit_permission'=> FALSE,
             'show_date' => FALSE,
           );

@@ -13,6 +13,7 @@ class RichReviewsDB extends NMDB {
 		global $wpdb;
 		$this->parent = $parent;
 		$this->sqltable = $this->parent->sqltable;
+
         $tableSearch = $wpdb->get_var("SHOW TABLES LIKE '$this->sqltable'");
         if ($tableSearch != $this->sqltable) {
             $this->create_update_database();
