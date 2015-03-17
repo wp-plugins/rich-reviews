@@ -292,6 +292,23 @@ $star_color: blue;
 $star_empty_color: black;
 
 // Review submission form
+.err {
+	color:red;
+	font-style:italic;
+	font-size:0.8em;
+	line-height: 0.6em;
+	a {
+		color:red !important;
+	}
+}
+.message {
+	padding:5px;
+	margin:5px 5px;
+	background: silver;
+	color: #049477;
+	border-left: solid #049477 3px;
+}
+
 .rr_review_form {
 	.form_table {
 		.rr_form_row {
@@ -312,6 +329,9 @@ $star_empty_color: black;
 			.rr_form_input {
 				vertical-align: top;
 				padding-bottom: 10px;
+				.err {
+					font-size: 0.6em;
+				}
 				input[type="text"] {
 					width: $input_width;
 					@media only screen and (max-width: 767px) { width: 0.5 * $input_width; }
@@ -345,6 +365,10 @@ $star_empty_color: black;
 		}
 		.stars {
 
+		}
+		.rr_date {
+			font-size: 0.6em;
+			font-style: italic;
 		}
 		.rr_review_text {
 			position: relative;

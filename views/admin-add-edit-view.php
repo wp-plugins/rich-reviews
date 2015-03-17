@@ -24,12 +24,17 @@ class RRAdminAddEdit {
 		$this->date_time = $rDateTime = date('Y-m-d H:i:s');
 		$this->reviewer_ip = $_SERVER['REMOTE_ADDR'];
 		//dump($this->rr_id, 'ID');
-		$this->check_add_update();
-		$this->display_form();
+		$data = $this->check_add_update();
+		$this->display_form($data);
 	}
 
 	function check_add_update() {
 		$output = '';
+		$data = array();
+		$form_name = '';
+		$form_title = '';
+		$form_rating = '';
+		$form_text = '';
 		if (isset($_POST['rr_save_review'])) {
 			if ($_POST['rr_save_review'] == 'admin-save-review') {
 				$this->date_time     = $this->core->fp_sanitize($_POST['date_time']);
@@ -41,6 +46,8 @@ class RRAdminAddEdit {
 				$this->review_status   = 1;
 				$this->postId   = $this->core->fp_sanitize($_POST['review_parent']);
 				$this->review_category = $this->core->fp_sanitize($_POST['review_category']);
+
+
 
 				$newdata = array(
 						'date_time'       => $this->date_time,
@@ -57,23 +64,27 @@ class RRAdminAddEdit {
 				//dump($newdata, 'NEW DATA');
 				$validData = true;
 				if ($this->reviewer_name  == '') {
-					$output .= 'You must include your name.';
+					$form_name = '<span class="err">You must include your name.</span><br>';
 					$validData = false;
-				} else if ($this->review_title == '') {
-					$output .= 'You must include a title for your review.';
+				}
+				if ($this->review_title == '') {
+					$form_title = '<span class="err">You must include a title for your review.</span><br>';
 					$validData = false;
-				} else if ($this->review_text== '') {
-					$output .= 'You must write some text in your review.';
+				}
+				if ($this->review_text== '') {
+					$form_text = '<span class="err">You must write some text in your review.</span><br>';
 					$validData = false;
-				} else if ($this->review_rating == 0) {
-					$output .= 'Please give a rating between 1 and 5 stars.';
+				}
+				if ($this->review_rating == 0) {
+					$form_rating = '<span class="err">Please give a rating between 1 and 5 stars.</span><br>';
 					$validData = false;
-				} else if ($this->reviewer_email != '') {
+				}
+				if ($this->reviewer_email != '') {
 					$firstAtPos = strpos($this->reviewer_email,'@');
 					$periodPos  = strpos($this->reviewer_email,'.');
 					$lastAtPos  = strrpos($this->reviewer_email,'@');
 					if (($firstAtPos === false) || ($firstAtPos != $lastAtPos) || ($periodPos === false)) {
-						$output .= 'You must provide a valid email address.';
+						$output .= '<span class="err">You must provide a valid email address.';
 						$validData = false;
 					}
 				}
@@ -88,18 +99,25 @@ class RRAdminAddEdit {
 						$output .= 'The email you entered was too long, and has been shortened.<br />';
 					}
 					$this->core->db->save($newdata, $this->rr_id);
-					$output .= 'The review has been saved.<br />';
+					$output .= '<span class="message">The review has been saved.</span><br />';
+
 				}
 			}
 		}
-		echo $output;
+		$data['output'] = $output;
+		$data['name_err'] = $form_name;
+		$data['title_err'] = $form_title;
+		$data['text_err'] = $form_text;
+		$data['rating_err'] = $form_rating;
+
+		return $data;
 	}
 
-	function display_form($review = NULL) {
+	function display_form($data = NULL, $review = NULL) {
 		if ($this->rr_id && $review == NULL) {
 			$review =(array) $this->core->db->get($this->rr_id, TRUE);
 			//dump($review, 'REVIEW');
-			$this->display_form($review);
+			$this->display_form($data, $review);
 			return;
 		}
 		if (is_null($review)) {
@@ -119,14 +137,30 @@ class RRAdminAddEdit {
 		foreach ($review as $key=>$value) {
 			$review[$key] = $this->core->nice_output($value);
 		}
+		if( $data != NULL) {
+			extract($data);
+		} else {
+			$name_err = '';
+			$title_err = '';
+			$text_err = '';
+			$rating_err = '';
+			$output = '';
+		}
+echo $output;
 		?>
+		<br/>
+<div class="clear"></div>
 <form method="post" action="">
 	<input type="hidden" name="rr_save_review" value="admin-save-review" />
-	<input type="hidden" name="date_time" value="<?php echo $review['date_time']; ?>" />
+
 	<table class="form_table">
 		<tr class="rr_form_row">
+			<td class="rr_form_heading rr_required">Date</td>
+			<td class="rr_form_input"><input type="text" name="date_time" value="<?php echo $review['date_time']; ?>" /></td>
+		</tr>
+		<tr class="rr_form_row">
 			<td class="rr_form_heading rr_required">Name</td>
-			<td class="rr_form_input"><input class="rr_small_input" type="text" name="reviewer_name" value="<?php echo $review['reviewer_name']; ?>" /></td>
+			<td class="rr_form_input"><?php echo $name_err; ?><input class="rr_small_input" type="text" name="reviewer_name" value="<?php echo $review['reviewer_name']; ?>" /></td>
 		</tr>
 		<tr class="rr_form_row">
 			<td class="rr_form_heading">Email</td>
@@ -134,15 +168,15 @@ class RRAdminAddEdit {
 		</tr>
 		<tr class="rr_form_row">
 			<td class="rr_form_heading rr_required"><?php echo ucwords(strtolower($this->core->rr_options['review_title'])); ?></td>
-			<td class="rr_form_input"><input class="rr_small_input" type="text" name="review_title" value="<?php echo $review['review_title']; ?>" /></td>
+			<td class="rr_form_input"><?php echo $title_err; ?><input class="rr_small_input" type="text" name="review_title" value="<?php echo $review['review_title']; ?>" /></td>
 		</tr>
 		<tr class="rr_form_row">
 			<td class="rr_form_heading rr_required">Rating</td>
-			<td class="rr_form_input"><input type="number" name="review_rating" value="<?php echo $review['review_rating']; ?>" min="1" max="5"/></td>
+			<td class="rr_form_input"><?php echo $rating_err; ?><input type="number" name="review_rating" value="<?php echo $review['review_rating']; ?>" min="1" max="5"/></td>
 		</tr>
 		<tr class="rr_form_row">
 			<td class="rr_form_heading rr_required">Review Content</td>
-			<td class="rr_form_input"><textarea class="rr_large_input" name="review_text" rows="10"><?php echo $review['review_text']; ?></textarea></td>
+			<td class="rr_form_input"><?php echo $text_err; ?><textarea class="rr_large_input" name="review_text" rows="10"><?php echo $review['review_text']; ?></textarea></td>
 		</tr>
 		<tr class="rr_form_row">
 			<td class="rr_form_heading rr_required">Review Parent Post Id</td>

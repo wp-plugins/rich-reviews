@@ -49,6 +49,10 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 
 == Changelog ==
 
+= 1.6.1 =
+* Updated layout of user opttions
+* Made form fields editable
+* Added Rounding for Aggregate Rating
 = 1.6.0 =
 * Updated rich snippet format to microdata
 * Added option to display reviews at full width
