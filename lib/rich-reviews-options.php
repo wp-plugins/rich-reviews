@@ -41,16 +41,28 @@ class RROptions {
         $this->options_name = $core->options_name;
         $this->defaults = array(
 			'version' => '1.5.7',
-            'star_color' => '#ffaf00',
+      'star_color' => '#ffaf00',
 			'snippet_stars' => FALSE,
 			'reviews_order' => 'asc',
-			'review_title' => 'review title',
 			'approve_authority' => 'manage_options',
 			'require_approval' => 'checked',
 			'show_form_post_title' => FALSE,
       'display_full_width' => FALSE,
 			'credit_permission'=> FALSE,
-            'show_date' => FALSE,
+      'show_date' => FALSE,
+      'form-name-label' => 'Name',
+      'form-name-display' => 'checked',
+      'form-name-require' => 'checked',
+      'form-email-label' => 'Email',
+      'form-email-display' => 'checked',
+      'form-email-require' => FALSE,
+      'form-title-label' => 'Review Title',
+      'form-title-display' => 'checked',
+      'form-title-require' => 'checked',
+      'form-content-label' => 'Review Content',
+      'form-content-display' => 'checked',
+      'form-content-require' => 'checked'
+
           );
         if ($this->get_option() == FALSE) {
             $this->set_to_defaults();
@@ -66,12 +78,22 @@ class RROptions {
 
     public function update_options() {
         if (isset($_POST['update']) && $_POST['update'] === 'rr-update-options') {
-            if (!isset($_POST['snippet_stars'])) { $_POST['snippet_stars'] = NULL; }
-            if (!isset($_POST['require_approval'])) { $_POST['require_approval'] = NULL; }
-            if (!isset($_POST['show_form_post_title'])) { $_POST['show_form_post_title'] = NULL; }
-            if (!isset($_POST['display_full_width'])) { $_POST['display_full_width'] = NULL; }
-			if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = NULL; }
-            if (!isset($_POST['show_date'])) { $_POST['show_date'] = NULL; }
+             if (!isset($_POST['snippet_stars'])) { $_POST['snippet_stars'] = false; }
+             if (!isset($_POST['show_date'])) { $_POST['show_date'] = false; }
+             if (!isset($_POST['require_approval'])) { $_POST['require_approval'] = false; }
+             if (!isset($_POST['show_form_post_title'])) { $_POST['show_form_post_title'] = false; }
+             if (!isset($_POST['display_full_width'])) { $_POST['display_full_width'] = false; }
+			       if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = false; }
+             if (!isset($_POST['form-name-label'])) { $_POST['form-name-label'] = false; }
+             if (!isset($_POST['form-name-display'])) { $_POST['form-name-display'] = false; }
+             if (!isset($_POST['form-name-require'])) { $_POST['form-name-require'] = false; }
+             if (!isset($_POST['form-email-display'])) { $_POST['form-email-display'] = false; }
+             if (!isset($_POST['form-email-require'])) { $_POST['form-email-require'] = false; }
+             if (!isset($_POST['form-title-display'])) { $_POST['form-title-display'] = false; }
+             if (!isset($_POST['form-title-require'])) { $_POST['form-title-require'] = false; }
+             if (!isset($_POST['form-content-display'])) { $_POST['form-content-display'] = false; }
+             if (!isset($_POST['form-content-require'])) { $_POST['form-content-require'] = false; }
+
             $current_settings = $this->get_option();
             $clean_current_settings = array();
             foreach ($current_settings as $k=>$val) {
@@ -79,6 +101,7 @@ class RROptions {
                     $clean_current_settings[$k] = $val;
                 }
             }
+
             $this->defaults = array_merge($this->defaults, $clean_current_settings);
             $update = array_merge($this->defaults, $_POST);
             $data = array();

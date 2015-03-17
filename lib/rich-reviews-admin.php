@@ -403,52 +403,88 @@ class RichReviewsAdmin {
 		<form id="rr-admin-options-form" action="" method="post">
 			<input type="hidden" name="update" value="rr-update-options">
 
-			<input type="checkbox" name="snippet_stars" value="checked" <?php echo $options['snippet_stars'] ?> />
-			<label for="snippet_stars">Star Snippets - this will change the averge rating displayed in the snippet shortcodeto be stars instead of numerical values.</label>
-			<br />
-			<input type="checkbox" name="show_form_post_title" value="checked" <?php echo $options['show_form_post_title'] ?> />
-			<label for="show_form_post_title">Include Post Titles - this will include the title and a link to the form page for every reviews.</label>
-			<br />
-			<input type="checkbox" name="display_full_width" value="checked" <?php echo $options['display_full_width'] ?> />
-			<label for="display_full_width">Display Full width - This option will display the reviews in full width block format. Default will dsplay the reviews in blocks of three.</label>
-			<br />
-			<input type="checkbox" name="credit_permission" value="checked" <?php echo $options['credit_permission'] ?> />
-			<label for="credit_permission">Give Credit to Nuanced Media - this option will add a small credit line and a link to Nuanced Media's website to the bottom of your reviews page</label>
-			<br />
-			<input type="checkbox" name="require_approval" value="checked" <?php echo $options['require_approval'] ?> />
-			<label for="require_approval">Require Approval - this sends all new reviews to the pending review page. Unchecking this will automatically publish all reviews as they are submitted.</label>
-			<br />
-			<input type="checkbox" name="show_date" value="checked" <?php echo $options['show_date'] ?> />
-			<label for="show_date">Display the date that the review was submitted inside the review.</label>
-			<br />
-			<input type="color" name="star_color" value="<?php echo $options['star_color'] ?>">
-			<label>Star Color - the color of the stars on reviews</label>
-			<br />
+			<div style="float:left;width:30%">
+				<h3><strong>Form Options</strong></h3>
+				<div style="border: solid 2px black"></div>
+				<h4>Name Field</h4>
+				<label for="form-name-label">Form Label: </label><input type="text" name="form-name-label" value="<?php echo $options['form-name-label']; ?>" /><br>
+				<label for="form-name-display">Display Field: <input type="checkbox" name="form-name-display" value="checked" <?php echo $options['form-name-display'] ?> /></label>
+				<label for="form-name-require">Require Field: <input type="checkbox" name="form-name-require" value="checked" <?php echo $options['form-name-require'] ?> /></label>
+				<br>
+				<h4>Email Field</h4>
+				<label for="email-label">Form Label: </label><input type="text" name="form-email-label" value="<?php echo $options['form-email-label']; ?>" /><br>
+				<label for="form-email-display">Display Field: </label><input type="checkbox" name="form-email-display" value="checked" <?php echo $options['form-email-display'] ?> />
+				<label for="form-email-require">Require Field: </label><input type="checkbox" name="form-email-require" value="checked" <?php echo $options['form-email-require'] ?> />
+				<br>
+				<h4>Title Field</h4>
+				<label for="form-title-label">Form Label: </label><input type="text" name="form-title-label" value="<?php echo $options['form-title-label']; ?>" /><br>
+				<label for="form-title-display">Display Field: </label><input type="checkbox" name="form-title-display" value="checked" <?php echo $options['form-title-display'] ?> />
+				<label for="form-title-require">Require Field: </label><input type="checkbox" name="form-title-require" value="checked" <?php echo $options['form-title-require'] ?> />
+				<br>
+				<h4>Content Field</h4>
+				<label for="form-content-label">Form Label: </label><input type="text" name="form-content-label" value="<?php echo $options['form-content-label']; ?>" /><br>
+				<label for="form-content-display">Display Field: </label><input type="checkbox" name="form-content-display" value="checked" <?php echo $options['form-content-display'] ?> />
+				<label for="form-content-require">Require Field: </label><input type="checkbox" name="form-content-require" value="checked" <?php echo $options['form-content-require'] ?> />
+				<br>
+			</div>
+			<div style="float:right;width:65%">
+				<h3><strong>Review Display Options</strong></h3>
+				<div style="border: solid 2px black"></div>
 
-			<select name="reviews_order" value="<?php echo $options['reviews_order'] ?>">
-				<?php
-				if ($options['reviews_order']==="ASC"){ ?><option value="ASC" selected="selected">Oldest First</option><?php }else {?><option value="ASC" >Oldest First</option><?php }
-				if ($options['reviews_order']==="DESC"){ ?><option value="DESC" selected="selected">Newest First</option><?php }else {?><option value="DESC" >Newest First</option><?php }
-				if ($options['reviews_order']==="random"){ ?><option value="random" selected="selected">Randomize</option><?php }else {?><option value="random" >Randomize</option><?php }
-				?>
-			</select>
-			<label for="reviews_order"> Review Display Order</label>
-			<br />
-			<select name="approve_authority">
-				<?php
-				if ($options['approve_authority']==="manage_options"){ ?><option value="manage_options" selected="selected">Admin</option><?php }else {?><option value="manage_options" >Admin</option><?php }
-				if ($options['approve_authority']==="moderate_comments"){ ?><option value="moderate_comments" selected="selected">Editor</option><?php }else {?><option value="moderate_comments" >Editor</option><?php }
-				if ($options['approve_authority']==="edit_published_posts"){ ?><option value="edit_published_posts" selected="selected">author</option><?php }else {?><option value="edit_published_posts" >Author</option><?php }
-				if ($options['approve_authority']==="edit_posts"){ ?><option value="edit_posts" selected="selected">Contributor</option><?php }else {?><option value="edit_posts" >Contributor</option><?php }
-				if ($options['approve_authority']==="read"){ ?><option value="read" selected="selected">Subscriber</option><?php }else {?><option value="read" >Subscriber</option><?php }
-				?>
-			</select>
-			<label for="approve_authority"> Authority level required to Approve Pending Posts</label>
-			<br />
-			<input type="text" name="review_title" value="<?php echo $options['review_title'] ?>">
-			<label>Review Title Text - Upon user request, the ability to change the text on the form from "Review Title" to whatever you would like.</label>
-			<br />
-			<br />
+				<h4><strong>Title Options</strong></h4>
+				<input type="checkbox" name="show_form_post_title" value="checked" <?php echo $options['show_form_post_title'] ?> />
+				<label for="show_form_post_title">Include Post Titles - this will include the title and a link to the form page for every review.</label>
+				<br />
+
+				<h4><strong>Rating Options</strong></h4>
+				<input type="checkbox" name="snippet_stars" value="checked" <?php echo $options['snippet_stars'] ?> />
+				<label for="snippet_stars">Star Snippets - this will change the averge rating displayed in the snippet shortcodeto be stars instead of numerical values.</label>
+				<br />
+
+				<input type="color" name="star_color" value="<?php echo $options['star_color'] ?>">
+				<label for="star_color">Star Color - the color of the stars on reviews</label>
+				<br />
+
+				<h4><strong>General Display Options</strong></h4>
+				<input type="checkbox" name="display_full_width" value="checked" <?php echo $options['display_full_width'] ?> />
+				<label for="display_full_width">Display Full width - This option will display the reviews in full width block format. Default will dsplay the reviews in blocks of three.</label>
+				<br />
+				<input type="checkbox" name="show_date" value="checked" <?php echo $options['show_date'] ?> />
+				<label for="show_date">Display the date that the review was submitted inside the review.</label>
+				<br />
+				<input type="checkbox" name="credit_permission" value="checked" <?php echo $options['credit_permission'] ?> />
+				<label for="credit_permission">Give Credit to Nuanced Media - this option will add a small credit line and a link to Nuanced Media's website to the bottom of your reviews page</label>
+				<br />
+
+				<label for="reviews_order"><strong>Review Display Order: </strong></label>
+				<select name="reviews_order" value="<?php echo $options['reviews_order'] ?>">
+					<?php
+					if ($options['reviews_order']==="ASC"){ ?><option value="ASC" selected="selected">Oldest First</option><?php }else {?><option value="ASC" >Oldest First</option><?php }
+					if ($options['reviews_order']==="DESC"){ ?><option value="DESC" selected="selected">Newest First</option><?php }else {?><option value="DESC" >Newest First</option><?php }
+					if ($options['reviews_order']==="random"){ ?><option value="random" selected="selected">Randomize</option><?php }else {?><option value="random" >Randomize</option><?php }
+					?>
+				</select>
+				<br />
+				<h3><strong>Admin Options</strong></h3>
+				<div style="border: solid 2px black"></div>
+				<h4><strong>Approval Options</strong></h4>
+				<input type="checkbox" name="require_approval" value="checked" <?php echo $options['require_approval'] ?> />
+				<label for="require_approval">Require Approval - this sends all new reviews to the pending review page. Unchecking this will automatically publish all reviews as they are submitted.</label>
+				<br />
+				<select name="approve_authority">
+					<?php
+					if ($options['approve_authority']==="manage_options"){ ?><option value="manage_options" selected="selected">Admin</option><?php }else {?><option value="manage_options" >Admin</option><?php }
+					if ($options['approve_authority']==="moderate_comments"){ ?><option value="moderate_comments" selected="selected">Editor</option><?php }else {?><option value="moderate_comments" >Editor</option><?php }
+					if ($options['approve_authority']==="edit_published_posts"){ ?><option value="edit_published_posts" selected="selected">author</option><?php }else {?><option value="edit_published_posts" >Author</option><?php }
+					if ($options['approve_authority']==="edit_posts"){ ?><option value="edit_posts" selected="selected">Contributor</option><?php }else {?><option value="edit_posts" >Contributor</option><?php }
+					if ($options['approve_authority']==="read"){ ?><option value="read" selected="selected">Subscriber</option><?php }else {?><option value="read" >Subscriber</option><?php }
+					?>
+				</select>
+				<label for="approve_authority"> Authority level required to Approve Pending Posts</label>
+				<br />
+			</div>
+			<div class="clear"></div>
+			<br/>
 			<input type="submit" class="button" value="Save Options">
 		</form>
 		<?php
