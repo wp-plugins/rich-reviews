@@ -1,6 +1,5 @@
 jQuery(function(){
 	if(jQuery('.successful').is(':visible')) {
-		console.log("wazza");
 		offset = jQuery('.successful').offset();
 		jQuery('html, body').animate({
 			scrollTop: (offset.top - 400)

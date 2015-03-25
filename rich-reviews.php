@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.6.1
+Version: 1.6.2
 Author: Foxy Technology
 Author URI: http://nuancedmedia.com/
 Text Domain: rich-reviews
@@ -291,7 +291,7 @@ class RichReviews {
 			}
 		}
 		if ($displayForm) {
-			$output .= '<form action="/" method="post" class="rr_review_form" id="fprr_review_form">';
+			$output .= '<form action="" method="post" class="rr_review_form" id="fprr_review_form">';
 			$output .= '	<input type="hidden" name="submitted" value="Y" />';
 			$output .= '	<input type="hidden" name="rRating" id="rRating" value="0" />';
 			$output .= '	<table class="form_table">';
@@ -494,7 +494,7 @@ class RichReviews {
 		// 	$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 		// }
 			$output = '<div itemscope itemtype="http://data-vocabulary.org/AggregateReview">';
-			$output .= 'Overall rating: <span itemprop="reviwRating" itemscope itemtype="http://data-vocabulary.org/Rating">';
+			$output .= 'Overall rating: <span itemprop="reviewRating" itemscope itemtype="http://data-vocabulary.org/Rating">';
 			$output .= '<span class="stars">' . $stars . '</span>';
 			$output .= '<span class="rating" itemprop="value" style="display: none !important;">' . $averageRating . '</span></span>';
 			$output .= ' based on <span class="votes" itemprop="votes">' . $approvedReviewsCount . '</span>';
