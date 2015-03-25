@@ -224,7 +224,7 @@ class RichReviews {
 				if($this->rr_options['form-name-display']) {
 					if($this->rr_options['form-name-require']) {
 						if ($rName == '') {
-						$nameErr = '<span class="err">You must include your name.</span><br>';
+						$nameErr = '<span class="form-err">You must include your name.</span><br>';
 						$validData = false;
 						}
 					}
@@ -232,7 +232,7 @@ class RichReviews {
 				if($this->rr_options['form-title-display']) {
 					if($this->rr_options['form-title-require']) {
 						if ($rTitle == '') {
-							$titleErr= '<span class="err">You must include a title for your review.</span><br>';
+							$titleErr= '<span class="form-err">You must include a title for your review.</span><br>';
 							$validData = false;
 						}
 					}
@@ -240,20 +240,20 @@ class RichReviews {
 				if($this->rr_options['form-content-display']) {
 					if($this->rr_options['form-content-require']) {
 						if ($rText == '') {
-							$textErr = '<span class="err">You must write some text in your review.</span><br>';
+							$textErr = '<span class="form-err">You must write some text in your review.</span><br>';
 							$validData = false;
 						}
 					}
 				}
 
 				if ($rRating == 0) {
-					$reviewErr = '<span class="err">Please give a rating between 1 and 5 stars.</span><br>';
+					$reviewErr = '<span class="form-err">Please give a rating between 1 and 5 stars.</span><br>';
 					$validData = false;
 				}
 				if($this->rr_options['form-email-display']) {
 					if($this->rr_options['form-email-require']) {
 						if($rEmail == '') {
-							$emailErr = '<span class="err">Please provide email.</span><br>';
+							$emailErr = '<span class="form-err">Please provide email.</span><br>';
 						}
 					}
 					if ($rEmail != '') {
@@ -261,7 +261,7 @@ class RichReviews {
 						$periodPos  = strpos($rEmail,'.');
 						$lastAtPos  = strrpos($rEmail,'@');
 						if (($firstAtPos === false) || ($firstAtPos != $lastAtPos) || ($periodPos === false)) {
-							$output .= 'You must provide a valid email address.';
+							$emailErr .= 'You must provide a valid email address.';
 							$validData = false;
 						}
 					}
@@ -285,11 +285,13 @@ class RichReviews {
 					$wpdb->insert($this->sqltable, $newdata);
 					$output .= '<span class="successful">Your review has been recorded and submitted for approval, ' . $this->nice_output($rName) . '. Thanks!</span><br />';
 					$displayForm = false;
+				} else {
+					//$output .= '<span id="target"></span>';
 				}
 			}
 		}
 		if ($displayForm) {
-			$output .= '<form action="" method="post" class="rr_review_form" id="fprr_review_form">';
+			$output .= '<form action="/#target" method="post" class="rr_review_form" id="fprr_review_form">';
 			$output .= '	<input type="hidden" name="submitted" value="Y" />';
 			$output .= '	<input type="hidden" name="rRating" id="rRating" value="0" />';
 			$output .= '	<table class="form_table">';
@@ -343,7 +345,7 @@ class RichReviews {
 
 			$output .= '		<tr class="rr_form_row">';
 			$output .= '			<td></td>';
-			$output .= '			<td class="rr_form_input"><input name="submitButton" type="submit" value="Submit Review"/></td>';
+			$output .= '			<td class="rr_form_input"><input id="submitReview" name="submitButton" type="submit" value="Submit Review"/></td>';
 			$output .= '		</tr>';
 			$output .= '	</table>';
 			$output .= '</form>';
@@ -491,17 +493,17 @@ class RichReviews {
 		// } else {
 		// 	$output = '<div class="hreview-aggregate">Overall rating: <span class="rating">' . $averageRating . '</span> out of 5 based on <span class="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 		// }
-			$output = '<div itemscope itemtype="http://data-vocabulary.org/Review-aggregate">';
-			$output .= 'Overall rating: <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">';
+			$output = '<div itemscope itemtype="http://data-vocabulary.org/AggregateReview">';
+			$output .= 'Overall rating: <span itemprop="reviwRating" itemscope itemtype="http://data-vocabulary.org/Rating">';
 			$output .= '<span class="stars">' . $stars . '</span>';
-			$output .= '<span class="rating" itemprop="rating" style="display: none !important;">' . $averageRating . '</span></span>';
+			$output .= '<span class="rating" itemprop="value" style="display: none !important;">' . $averageRating . '</span></span>';
 			$output .= ' based on <span class="votes" itemprop="votes">' . $approvedReviewsCount . '</span>';
 			$output .= ' reviews</div>';
 			$this->render_custom_styles();
 		} else {
-			$output = '<div itemscope itemtype="http://data-vocabulary.org/Review-aggregate">';
-			$output .= 'Overall rating: <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">';
-			$output .= '<strong><span class="rating" itemprop="rating">' . $averageRating . '</span></strong> out of <strong>5</strong> ';
+			$output = '<div itemscope itemtype="http://data-vocabulary.org/AggregateReview">';
+			$output .= 'Overall rating: <span itemprop="reviewRating" itemscope itemtype="http://data-vocabulary.org/Rating">';
+			$output .= '<strong><span class="value" itemprop="rating">' . $averageRating . '</span></strong> out of <strong>5</strong> ';
 			$output .= 'based on <span class="votes" itemprop="votes">' . $approvedReviewsCount . '</span> reviews</div>';
 		}
 
@@ -628,10 +630,10 @@ class RichReviews {
 		}
 		if ($this->rr_options['show_date']) {
 			if($rDateTime != "0000-00-00 00:00:00") {
-				$output .= '<span class="rr_date">Submitted: <time itemprop="startDate" datetime="' . $rDate . '">' . $rDate . '</time></span>';
+				$output .= '<span class="rr_date">Submitted: <time datetime="' . $rDate . '">' . $rDate . '</time></span>';
 			} else {
 				if(current_user_can('edit_posts')) {
-				$output .= '<span class="err rr_date">Date improperly formatted, correct in <a href="/wp-admin/admin.php?page=fp_admin_approved_reviews_page">Dashboard</a></span>';
+				$output .= '<span class="date-err rr_date">Date improperly formatted, correct in <a href="/wp-admin/admin.php?page=fp_admin_approved_reviews_page">Dashboard</a></span>';
 				}
 			}
 		}
