@@ -283,7 +283,7 @@ class RichReviews {
 						}
 					}
 					$wpdb->insert($this->sqltable, $newdata);
-					$output .= '<span class="successful">Your review has been recorded and submitted for approval, ' . $this->nice_output($rName) . '. Thanks!</span><br />';
+					$output .= '<span class="successful"><strong>Your review has been recorded and submitted for approval, ' . $this->nice_output($rName) . '. Thanks!</strong></span><br />';
 					$displayForm = false;
 				} else {
 					//$output .= '<span id="target"></span>';
@@ -291,7 +291,7 @@ class RichReviews {
 			}
 		}
 		if ($displayForm) {
-			$output .= '<form action="/#target" method="post" class="rr_review_form" id="fprr_review_form">';
+			$output .= '<form action="/" method="post" class="rr_review_form" id="fprr_review_form">';
 			$output .= '	<input type="hidden" name="submitted" value="Y" />';
 			$output .= '	<input type="hidden" name="rRating" id="rRating" value="0" />';
 			$output .= '	<table class="form_table">';
