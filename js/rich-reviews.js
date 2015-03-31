@@ -1,17 +1,17 @@
 jQuery(function(){
-	if(jQuery('.successful').is(':visible')) {
-		offset = jQuery('.successful').offset();
-		jQuery('html, body').animate({
-			scrollTop: (offset.top - 400)
-		});
-	} else {
-		if(jQuery('.form-err').is(':visible')) {
-			offset = jQuery('.form-err').offset();
-			jQuery('html, body').animate({
-				scrollTop: (offset.top - 200)
-			});
-		}
-	}
+	// if(jQuery('.successful').is(':visible')) {
+	// 	offset = jQuery('.successful').offset();
+	// 	jQuery('html, body').animate({
+	// 		scrollTop: (offset.top - 400)
+	// 	});
+	// } else {
+	// 	if(jQuery('.form-err').is(':visible')) {
+	// 		offset = jQuery('.form-err').offset();
+	// 		jQuery('html, body').animate({
+	// 			scrollTop: (offset.top - 200)
+	// 		});
+	// 	}
+	// }
 	jQuery('.rr_review_text').each(function(event){
 		var max_length = 150;
 		if(jQuery(this).html().length > max_length){

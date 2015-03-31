@@ -311,6 +311,20 @@ $star_empty_color: black;
 }
 .succcessful {
 	font-size: 1.3em;
+	text-align: center;
+	&.form-err {
+		color: green;
+	}
+	.big-star {
+		vertical-align: middle;
+		margin: 8px;
+	}
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
 }
 
 .rr_review_form {
@@ -365,7 +379,7 @@ $star_empty_color: black;
 		padding: 20px;
 		@media only screen and (max-width: 767px) { width: 100%; min-width: 0;}
 		.rr_title {
-			margin-bottom: 5px;
+			margin: 5px;
 		}
 		.stars {
 

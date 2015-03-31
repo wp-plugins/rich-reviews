@@ -61,7 +61,11 @@ class RROptions {
       'form-title-require' => 'checked',
       'form-content-label' => 'Review Content',
       'form-content-display' => 'checked',
-      'form-content-require' => 'checked'
+      'form-content-require' => 'checked',
+      'form-submit-text' => 'Submit',
+      'return-to-form' => false,
+      'send-email-notifications' => false,
+      'admin-email' => ''
 
           );
         if ($this->get_option() == FALSE) {
@@ -93,6 +97,9 @@ class RROptions {
              if (!isset($_POST['form-title-require'])) { $_POST['form-title-require'] = false; }
              if (!isset($_POST['form-content-display'])) { $_POST['form-content-display'] = false; }
              if (!isset($_POST['form-content-require'])) { $_POST['form-content-require'] = false; }
+             if (!isset($_POST['return-to-form'])) { $_POST['return-to-form'] = false; }
+             if (!isset($_POST['send-email-notifications'])) { $_POST['send-email-notifications'] = false; }
+
 
             $current_settings = $this->get_option();
             $clean_current_settings = array();
@@ -129,6 +136,7 @@ class RROptions {
             $this->update_option($data);
             $_POST['update'] = NULL;
             $this->updated = 'rr-update-support';
+            //$this-set_to_defaults();
         }
     }
 

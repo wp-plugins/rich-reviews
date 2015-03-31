@@ -4,7 +4,7 @@ Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
 Tested up to: 4.1.1
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 
 == Changelog ==
 
+= 1.6.3 =
+* hotfix: fixing longstanding global reviews show issue
+* added option for email notifications, and accompanying field for admin emaail
+* added option for scroll back to form after submission
 = 1.6.2 =
 * hotfix: scroll after submission
 * updated rich formatting

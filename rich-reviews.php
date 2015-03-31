@@ -261,7 +261,7 @@ class RichReviews {
 						$periodPos  = strpos($rEmail,'.');
 						$lastAtPos  = strrpos($rEmail,'@');
 						if (($firstAtPos === false) || ($firstAtPos != $lastAtPos) || ($periodPos === false)) {
-							$emailErr .= 'You must provide a valid email address.';
+							$emailErr .= '<span class="form-err">You must provide a valid email address.</span><br>';
 							$validData = false;
 						}
 					}
@@ -282,13 +282,19 @@ class RichReviews {
 							$output .= 'The email you entered was too long, and has been shortened.<br />';
 						}
 					}
+					if( $this->rr_options['send-email-notifications']) {
+						$this->sendEmail($newdata);
+					}
 					$wpdb->insert($this->sqltable, $newdata);
-					$output .= '<span class="successful"><strong>Your review has been recorded and submitted for approval, ' . $this->nice_output($rName) . '. Thanks!</strong></span><br />';
+					$output .= '<span id="state"></span>';
+					$output .= '<div class="successful"><span class="rr_star glyphicon glyphicon-star left" style="font-size: 34px;"></span><span class="rr_star glyphicon glyphicon-star big-star right" style="font-size: 34px;"></span><center><strong>' . $this->nice_output($rName) . ', your review has been recorded and submitted for approval. Thanks!</strong></center><div class="clear"></div></div>';
 					$displayForm = false;
 				} else {
 					//$output .= '<span id="target"></span>';
 				}
 			}
+		} else {
+			$output .= '<span id="state"></span>';
 		}
 		if ($displayForm) {
 			$output .= '<form action="" method="post" class="rr_review_form" id="fprr_review_form">';
@@ -345,13 +351,64 @@ class RichReviews {
 
 			$output .= '		<tr class="rr_form_row">';
 			$output .= '			<td></td>';
-			$output .= '			<td class="rr_form_input"><input id="submitReview" name="submitButton" type="submit" value="Submit Review"/></td>';
+			$output .= '			<td class="rr_form_input"><input id="submitReview" name="submitButton" type="submit" value="'.$this->rr_options['form-submit-text'].'"/></td>';
 			$output .= '		</tr>';
 			$output .= '	</table>';
 			$output .= '</form>';
 		}
 		$this->render_custom_styles();
+		if( $this->options->get_option('return-to-form')) {
+				$output .= '<script>
+								jQuery(function(){
+									if(jQuery(".successful").is(":visible")) {
+										offset = jQuery(".successful").offset();
+										jQuery("html, body").animate({
+											scrollTop: (offset.top - 400)
+										});
+									} else {
+										if(jQuery(".form-err").is(":visible")) {
+											offset = jQuery(".form-err").offset();
+											jQuery("html, body").animate({
+												scrollTop: (offset.top - 200)
+											});
+										}
+									}
+								});
+							</script>';
+		}
 		return __($output, 'rich-reviews');
+	}
+
+	function sendEmail($data) {
+		extract($data);
+		$message = "";
+		$message .= "RichReviews User,\r\n";
+		$message .= "\r\n";
+		$message .= "You have received a new review which is now pending your approval. The information from the review is listed below.\r\n";
+		$message .= "\r\n";
+		$message .= "Review Date: ".$date_time."\r\n";
+		if( $reviewer_name != "" ) {
+			$message .= $this->rr_options["form-name-label"].": ".$reviewer_name."\r\n";
+		}
+		if( $reviewer_email != "" ) {
+			$message .= $this->rr_options["form-email-label"].": ".$reviewer_email."\r\n";
+		}
+		if( $review_title != "" ) {
+			$message .= $this->rr_options["form-title-label"].": ".$review_title."\r\n";
+		}
+		$message .= "Review Rating: ". $review_rating ."\r\n";
+		if ($review_text != "" ) {
+			$message .= $this->rr_options["form-content-label"].": ".$review_text."\r\n";
+		}
+		$message .= "Review Category: ". $review_category ."\r\n\r\n";
+
+		$message .= "Click the link below to review and approve your new review.\r\n";
+		$message .= admin_url()."admin.php?page=fp_admin_pending_reviews_page\r\n\r\n";
+		$message .= "Thanks for choosing Rich Reviews,\r\n";
+		$message .= "The Nuanced Media Team";
+
+		mail($this->rr_options['admin-email'], 'New Pending Review', $message);
+
 	}
 
 	function shortcode_reviews_show($atts) {
@@ -371,6 +428,9 @@ class RichReviews {
 		$this->db->where('review_status', 1);
 		if (($category == 'post') || ($category == 'page')) {
 			$this->db->where('post_id', $post->ID);
+		} else if ($category == 'none') {
+			$this->db->where('review_category', 'none');
+			$this->db->or_where('review_category', '');
 		} else {
 			$this->db->where('review_category', $category);
 		}

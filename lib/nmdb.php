@@ -88,6 +88,13 @@ class NMDB {
             }
         }
     }
+    function or_where($key_or_array, $value = NULL) {
+        if ($this->where == '') {
+            $this->where = ' WHERE ' . $key_or_array . ' = \'' . addslashes($value) . '\'';
+        } else {
+            $this->where .= ' OR ' . $key_or_array . ' = \'' . addslashes($value) . '\'';
+        }
+    }
 
     function order_by($key, $sort = 'ASC') {
         $this->order_by = ' ORDER BY `' . $key . '` ' . $sort;
@@ -103,16 +110,16 @@ class NMDB {
     function offset($offset) {
         $this->offset = ' OFFSET ' . $offset;
     }
-	
+
 	/**
 	 * Builds a query based on previous inputs and method calls and
 	 * retrieves and returns the data. If $var is TRUE, it will just get
-	 * a 'var' result. 
+	 * a 'var' result.
 	 * Otherwise:
 	 * If $id is not NULL or if $single is TRUE, then it will return a single
 	 * row. Otherwise, it will return an array of objects (representing each
 	 * row, of course.)
-	 * 
+	 *
 	 * @global WPDB $wpdb
 	 * @param INT $id
 	 * @param BOOL $single
@@ -201,11 +208,11 @@ class NMDB {
         }
         echo '</tbody></table>';
     }
-    
+
     /**
      * Functions Added by Austin
      */
-    
+
     public function delete_table() {
         global $wpdb;
         $wpdb->query("DROP TABLE IF EXISTS $this->sqltable");

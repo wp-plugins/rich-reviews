@@ -426,6 +426,9 @@ class RichReviewsAdmin {
 				<label for="form-content-display">Display Field: </label><input type="checkbox" name="form-content-display" value="checked" <?php echo $options['form-content-display'] ?> /><br/>
 				<label for="form-content-require">Require Field: </label><input type="checkbox" name="form-content-require" value="checked" <?php echo $options['form-content-require'] ?> />
 				<br>
+				<h4>Submit Button</h4>
+				<label for="form-submit-text">Submit Text: </label><input type="text" name="form-submit-text" value="<?php echo $options['form-submit-text']; ?>" /><br>
+				<br>
 			</div>
 			<div style="float:right;width:65%">
 				<h3><strong>Review Display Options</strong></h3>
@@ -438,7 +441,7 @@ class RichReviewsAdmin {
 
 				<h4><strong>Rating Options</strong></h4>
 				<input type="checkbox" name="snippet_stars" value="checked" <?php echo $options['snippet_stars'] ?> />
-				<label for="snippet_stars">Star Snippets - this will change the averge rating displayed in the snippet shortcodeto be stars instead of numerical values.</label>
+				<label for="snippet_stars">Star Snippets - this will change the averge rating displayed in the snippet shortcode to be stars instead of numerical values.</label>
 				<br />
 
 				<input type="color" name="star_color" value="<?php echo $options['star_color'] ?>">
@@ -454,6 +457,9 @@ class RichReviewsAdmin {
 				<br />
 				<input type="checkbox" name="credit_permission" value="checked" <?php echo $options['credit_permission'] ?> />
 				<label for="credit_permission">Give Credit to Nuanced Media - this option will add a small credit line and a link to Nuanced Media's website to the bottom of your reviews page</label>
+				<br />
+				<input type="checkbox" name="return-to-form" value="checked" <?php echo $options['return-to-form'] ?> />
+				<label for="return-form">Upon submission of the review form, the page will automatically scroll back to the location of the form.</label>
 				<br />
 
 				<label for="reviews_order"><strong>Review Display Order: </strong></label>
@@ -481,6 +487,13 @@ class RichReviewsAdmin {
 					?>
 				</select>
 				<label for="approve_authority"> Authority level required to Approve Pending Posts</label>
+				<br />
+				<input type="checkbox" name="send-email-notifications" value="checked" <?php echo $options['send-email-notifications'] ?> />
+				<label for="require_approval">Send Notification Emails - This will send an automatic email to the admin every time a new pending review is submitted.</label>
+				<br />
+				<br />
+				<label for "admin-email">Admin Email - The email to which notifications are sent.</label>
+				<input type="text" name="admin-email" style="width:100%;" value="<?php echo $options['admin-email'] ?>" />
 				<br />
 			</div>
 			<div class="clear"></div>
