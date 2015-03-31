@@ -63,8 +63,8 @@ class RROptions {
       'form-content-display' => 'checked',
       'form-content-require' => 'checked',
       'form-submit-text' => 'Submit',
-      'return-to-form' => false,
-      'send-email-notifications' => false,
+      'return-to-form' => FALSE,
+      'send-email-notifications' => FALSE,
       'admin-email' => ''
 
           );
