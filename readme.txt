@@ -50,6 +50,7 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 == Changelog ==
 
 = 1.6.4 =
+* HOTFIX: Widget dependency on dprecated code.
 * Added "all" value for both snippet and show shortcodes
 * Altered and fixed aggregate category query
 * Uppdated Rich Snippet output for Schema.org markup

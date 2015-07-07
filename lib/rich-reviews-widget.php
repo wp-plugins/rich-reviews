@@ -37,12 +37,17 @@ class RichReviewsShowWidget extends WP_Widget {
     public function widget( $args, $instance ) {
         global $richReviews;
         extract($args);
+
+        $atts = array(
+            'category' => 'none',
+            'num'      => 'all'
+        );
         echo $before_widget;
         echo '<div class="rr-widget-display">';
 		if ( $instance['title'] ) {
 			echo $before_title . $instance['title'] . $after_title;
         }
-        echo $richReviews->shortcode_reviews_show_all();
+        echo $richReviews->shortcode_reviews_show_control($atts);
         echo '</div>';
         echo $after_widget;
     }
