@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Created: 2014-07-15
  * Last Revised: 2014-07-15
  *
@@ -40,7 +40,7 @@ class RROptions {
         }
         $this->options_name = $core->options_name;
         $this->defaults = array(
-			'version' => '1.5.7',
+			'version' => '1.6.4',
       'star_color' => '#ffaf00',
 			'snippet_stars' => FALSE,
 			'reviews_order' => 'asc',
@@ -53,12 +53,18 @@ class RROptions {
       'form-name-label' => 'Name',
       'form-name-display' => 'checked',
       'form-name-require' => 'checked',
+      // 'form-reviewer-image-label' => 'Reviewer Image',
+      // 'form-reviewer-image-display' => 'checked',
+      // 'form-reviewer-image-require' => 'checked',
       'form-email-label' => 'Email',
       'form-email-display' => 'checked',
       'form-email-require' => FALSE,
       'form-title-label' => 'Review Title',
       'form-title-display' => 'checked',
       'form-title-require' => 'checked',
+      // 'form-reviewed-image-label' => 'Review Image',
+      // 'form-reviewed-image-display' => 'checked',
+      // 'form-reviewed-image-require' => 'checked',
       'form-content-label' => 'Review Content',
       'form-content-display' => 'checked',
       'form-content-require' => 'checked',
@@ -97,6 +103,10 @@ class RROptions {
              if (!isset($_POST['form-title-require'])) { $_POST['form-title-require'] = false; }
              if (!isset($_POST['form-content-display'])) { $_POST['form-content-display'] = false; }
              if (!isset($_POST['form-content-require'])) { $_POST['form-content-require'] = false; }
+             // if (!isset($_POST['form-reviewed-image-display'])) { $_POST['form-reviewed-image-display'] = false; }
+             // if (!isset($_POST['form-reviewed-image-require'])) { $_POST['form-reviewed-image-require'] = false; }
+             // if (!isset($_POST['form-reviewer-image-display'])) { $_POST['form-reviewer-image-display'] = false; }
+             // if (!isset($_POST['form-reviewer-image-require'])) { $_POST['form-reviewer-image-require'] = false; }
              if (!isset($_POST['return-to-form'])) { $_POST['return-to-form'] = false; }
              if (!isset($_POST['send-email-notifications'])) { $_POST['send-email-notifications'] = false; }
 

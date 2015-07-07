@@ -25,8 +25,8 @@ class Rich_Reviews_Table extends WP_List_Table {
 	}
 	function column_id($item){
 		$actions = array(
-			'edit' => sprintf('<a href="?page=%s&action=%s&review=%s">Edit</a>',$_REQUEST['page'],'pending',$item->id),
-			'delete' => sprintf('<a href="?page=%s&action=%s&review=%s">Delete</a>',$_REQUEST['page'],'delete',$item->id),
+			'edit' => sprintf('<a href="?page=%s&action=%s&review=%s">' . __('Edit', 'rich-reviews') . '</a>',$_REQUEST['page'],'pending',$item->id),
+			'delete' => sprintf('<a href="?page=%s&action=%s&review=%s">' . __('Delete', 'rich-reviews') . '</a>',$_REQUEST['page'],'delete',$item->id),
 		);
 		return sprintf('%1$s%2$s',$item->id,$this->row_actions($actions));
 	}
@@ -67,24 +67,24 @@ class Rich_Reviews_Table extends WP_List_Table {
 	}
 
 	function column_edit($item){
-		return sprintf('<a href="/wp-admin/admin.php?page=fp_admin_add_edit&rr_id=' . $item->id . '"><span class="button rr-button">Edit</span></a>',$item->id);
+		return sprintf('<a href="/wp-admin/admin.php?page=fp_admin_add_edit&rr_id=' . $item->id . '"><span class="button rr-button">' . __('Edit', 'rich-reviews') . '</span></a>',$item->id);
 	}
 
 	function get_columns() {
 		return $columns = array(
 			'cb'        		  => '<input type="checkbox" />',
-			//'id'              => 'ID',
-			'date_time'       => 'Date',
-			'reviewer_name'   => 'Name',
-			'reviewer_email'  => 'Email',
-			'review_title'    => 'Title',
-			'review_rating'   => 'Rating',
-			'review_text'     => 'Text',
-			//'review_status'   => 'Status',
-			//'reviewer_ip'     => 'IP',
-			'post_id'         => 'Page ID',
-			'review_category' => 'Category',
-			'edit'            => 'Edit',
+			//'id'              => __('ID', 'rich-reviews'),
+			'date_time'       =>  __('Date', 'rich-reviews'),
+			'reviewer_name'   => __('Name', 'rich-reviews'),
+			'reviewer_email'  => __('Email', 'rich-reviews'),
+			'review_title'    => __('Title', 'rich-reviews'),
+			'review_rating'   => __('Rating', 'rich-reviews'),
+			'review_text'     => __('Text', 'rich-reviews'),
+			//'review_status'   => __('Status', 'rich-reviews'),
+			//'reviewer_ip'     => __('IP', 'rich-reviews'),
+			'post_id'         => __('Page ID', 'rich-reviews'),
+			'review_category' => __('Category', 'rich-reviews'),
+			'edit'            => __('Edit', 'rich-reviews'),
 		);
 	}
 
@@ -107,12 +107,12 @@ class Rich_Reviews_Table extends WP_List_Table {
 	function get_bulk_actions() {
 		$actions = array();
 		if ($this->flag == 'all' || $this->flag == 'approved') {
-			$actions['pending'] = 'Set to Pending';
+			$actions['pending'] = __('Set to Pending', 'rich-reviews');
 		}
 		if ($this->flag == 'all' || $this->flag == 'pending') {
-			$actions['approve'] = 'Approve';
+			$actions['approve'] = __('Approve', 'rich-reviews');
 		}
-		$actions['delete'] = 'Delete';
+		$actions['delete'] = __('Delete', 'rich-reviews');
 		return $actions;
 	}
 
@@ -124,16 +124,16 @@ class Rich_Reviews_Table extends WP_List_Table {
 			$this_action = '';
 			if ('approve' === $this->current_action()) {
 				$this_action = 'approve';
-				$action_alert_type = 'approved';
+				$action_alert_type = __('approved', 'rich-reviews');
 			} else if ('pending' === $this->current_action()) {
 				$this_action = 'pending';
-				$action_alert_type = 'set to pending';
+				$action_alert_type = __('set to pending', 'rich-reviews');;
 			} else if ('delete' === $this->current_action()) {
 				$this_action = 'delete';
-				$action_alert_type = 'deleted';
+				$action_alert_type = __('deleted', 'rich-reviews');
 			} else if (false === $this->current_action()) {
 				$this_action = 'false';
-				$action_alert_type = 'false';
+				$action_alert_type = __('false', 'rich-reviews');
 			}
 			if (!empty($ids)) {
 				foreach ($ids as $id) {
@@ -151,12 +151,12 @@ class Rich_Reviews_Table extends WP_List_Table {
 					}
 				}
 				if (count($ids) == 1) {
-					$action_alert = '1 review has been successfully ' . $action_alert_type . '.';
+					$action_alert = '1 ' . __('review has been successfully ', 'rich-reviews') . $action_alert_type . '.';
 				} else {
-					$action_alert = count($ids) . ' reviews have been successfully ' . $action_alert_type . '.';
+					$action_alert = count($ids) . __(' reviews have been successfully ', 'rich-reviews') . $action_alert_type . '.';
 				}
-				if ($this_action === 'false') { 
-					$action_alert = 'You must select an action.';
+				if ($this_action === 'false') {
+					$action_alert = __('You must select an action.', 'rich-reviews');
 				}
 				echo '<div class="updated" style="padding: 10px;">' . $action_alert . '</div>';
 			}
