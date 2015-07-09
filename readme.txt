@@ -50,8 +50,8 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 == Changelog ==
 
 = 1.6.4 =
-* HOTFIX: Fixed non-categorized item reviewed schema
-* HOTFIX: Widget dependency on deprecated code.
+* hotfix: Fixed non-categorized item reviewed schema, and itemreviewed and author defaults
+* hotfix: Widget dependency on deprecated code.
 * Added "all" value for both snippet and show shortcodes
 * Altered and fixed aggregate category query
 * Uppdated Rich Snippet output for Schema.org markup
