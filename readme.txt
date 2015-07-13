@@ -50,6 +50,7 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 == Changelog ==
 
 = 1.6.4 =
+* hotfix: global post for snippet query
 * hotfix: Fixed non-categorized item reviewed schema, and itemreviewed and author defaults
 * hotfix: Widget dependency on deprecated code.
 * Added "all" value for both snippet and show shortcodes
