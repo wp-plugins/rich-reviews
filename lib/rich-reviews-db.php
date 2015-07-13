@@ -92,6 +92,7 @@ class RichReviewsDB extends NMDB {
 
 	function get_average_rating($category) {
 		global $wpdb;
+		global $post;
 
 		if ($category == 'none') {
 			$whereStatement = "WHERE review_status=\"1\" and (review_category=\"none\" or review_category=\"\")";
