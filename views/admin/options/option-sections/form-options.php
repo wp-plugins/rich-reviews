@@ -54,6 +54,12 @@
 	</label>
 	<input type="checkbox" name="form-title-require" value="checked" <?php echo $options['form-title-require'] ?> />
 	<br>
+	<h4><?php _e('Rating Field', 'rich-reviews'); ?></h4>
+	<label for="form-rating-label">
+		<?php _e('Form Label: ', 'rich-reviews'); ?>
+	</label>
+	<input type="text" name="form-rating-label" value="<?php echo $options['form-rating-label']; ?>" />
+	<br>
 	<h4><?php _e('Content Field', 'rich-reviews'); ?></h4>
 	<label for="form-content-label">
 		<?php _e('Form Label: ', 'rich-reviews'); ?>

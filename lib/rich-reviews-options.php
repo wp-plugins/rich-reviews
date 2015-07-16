@@ -40,43 +40,50 @@ class RROptions {
         }
         $this->options_name = $core->options_name;
         $this->defaults = array(
-			'version' => '1.6.4',
-      'star_color' => '#ffaf00',
-			'snippet_stars' => FALSE,
-			'reviews_order' => 'asc',
-			'approve_authority' => 'manage_options',
-			'require_approval' => 'checked',
-			'show_form_post_title' => FALSE,
-      'display_full_width' => FALSE,
-			'credit_permission'=> FALSE,
-      'show_date' => FALSE,
-      'form-name-label' => 'Name',
-      'form-name-display' => 'checked',
-      'form-name-require' => 'checked',
-      // 'form-reviewer-image-label' => 'Reviewer Image',
-      // 'form-reviewer-image-display' => 'checked',
-      // 'form-reviewer-image-require' => 'checked',
-      'form-email-label' => 'Email',
-      'form-email-display' => 'checked',
-      'form-email-require' => FALSE,
-      'form-title-label' => 'Review Title',
-      'form-title-display' => 'checked',
-      'form-title-require' => 'checked',
-      // 'form-reviewed-image-label' => 'Review Image',
-      // 'form-reviewed-image-display' => 'checked',
-      // 'form-reviewed-image-require' => 'checked',
-      'form-content-label' => 'Review Content',
-      'form-content-display' => 'checked',
-      'form-content-require' => 'checked',
-      'form-submit-text' => 'Submit',
-      'return-to-form' => FALSE,
-      'send-email-notifications' => FALSE,
-      'admin-email' => ''
+    			'version' => '1.6.4',
+          'star_color' => '#ffaf00',
+    			'snippet_stars' => FALSE,
+    			'reviews_order' => 'asc',
+    			'approve_authority' => 'manage_options',
+    			'require_approval' => 'checked',
+    			'show_form_post_title' => FALSE,
+          'display_full_width' => FALSE,
+    			'credit_permission'=> FALSE,
+          'show_date' => FALSE,
+          'rich_itemReviewed_fallback' => 'Service',
+          'rich_itemReviewed_fallback_case' => 'both_missing',
+          'rich_author_fallback' => 'Anonymous',
+          'rich_include_url' => FALSE,
+          'rich_url_value' => '',
+          'form-name-label' => 'Name',
+          'form-name-display' => 'checked',
+          'form-name-require' => 'checked',
+          // 'form-reviewer-image-label' => 'Reviewer Image',
+          // 'form-reviewer-image-display' => 'checked',
+          // 'form-reviewer-image-require' => 'checked',
+          'form-email-label' => 'Email',
+          'form-email-display' => 'checked',
+          'form-email-require' => FALSE,
+          'form-title-label' => 'Review Title',
+          'form-title-display' => 'checked',
+          'form-title-require' => 'checked',
+          // 'form-reviewed-image-label' => 'Review Image',
+          // 'form-reviewed-image-display' => 'checked',
+          // 'form-reviewed-image-require' => 'checked',
+          'form-rating-label' => 'Rating',
+          'form-content-label' => 'Review Content',
+          'form-content-display' => 'checked',
+          'form-content-require' => 'checked',
+          'form-submit-text' => 'Submit',
+          'return-to-form' => FALSE,
+          'send-email-notifications' => FALSE,
+          'admin-email' => ''
 
           );
         if ($this->get_option() == FALSE) {
             $this->set_to_defaults();
         }
+        $this->update_options();
     }
 
     public function set_to_defaults() {
@@ -93,7 +100,8 @@ class RROptions {
              if (!isset($_POST['require_approval'])) { $_POST['require_approval'] = false; }
              if (!isset($_POST['show_form_post_title'])) { $_POST['show_form_post_title'] = false; }
              if (!isset($_POST['display_full_width'])) { $_POST['display_full_width'] = false; }
-			       if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = false; }
+             if (!isset($_POST['credit_permission'])) { $_POST['credit_permission'] = false; }
+			       if (!isset($_POST['rich_include_url'])) { $_POST['rich_include_url'] = false; }
              if (!isset($_POST['form-name-label'])) { $_POST['form-name-label'] = false; }
              if (!isset($_POST['form-name-display'])) { $_POST['form-name-display'] = false; }
              if (!isset($_POST['form-name-require'])) { $_POST['form-name-require'] = false; }
@@ -149,6 +157,8 @@ class RROptions {
             //$this-set_to_defaults();
         }
     }
+
+
 
 
 
@@ -270,4 +280,19 @@ class RROptions {
             $this->updated = FALSE;
         }
 	}
+
+  public function force_update() {
+      $current_settings = $this->get_option();
+      $this->defaults = array_merge($this->defaults, $current_settings);
+      $update = array_merge($this->defaults, $_POST);
+      $data = array();
+      foreach ($update as $key=>$value) {
+          if ($key != 'update' && $key != NULL) {
+              $data[$key] = $value;
+          }
+      }
+      $this->update_option($data);
+      $_POST['update'] = NULL;
+      $this->updated = 'rr-update-support';
+  }
 }

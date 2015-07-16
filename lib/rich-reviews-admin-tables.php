@@ -67,7 +67,7 @@ class Rich_Reviews_Table extends WP_List_Table {
 	}
 
 	function column_edit($item){
-		return sprintf('<a href="/wp-admin/admin.php?page=fp_admin_add_edit&rr_id=' . $item->id . '"><span class="button rr-button">' . __('Edit', 'rich-reviews') . '</span></a>',$item->id);
+		return sprintf('<a href="' . admin_url() . '/admin.php?page=fp_admin_add_edit&rr_id=' . $item->id . '"><span class="button rr-button">' . __('Edit', 'rich-reviews') . '</span></a>',$item->id);
 	}
 
 	function get_columns() {

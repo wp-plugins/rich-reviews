@@ -4,7 +4,7 @@ Donate link: http://nuancedmedia.com/
 Tags: reviews, review, testimonials, testimonial, hreview, rating, ratings, google, rich snippets, review widget, seo, shortcode, plugin, snippet, snippets
 Requires at least: 3.4
 Tested up to: 4.2.2
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,9 +49,12 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 
 == Changelog ==
 
+= 1.6.5 =
+* Added Rich Markup options for author and subject fallbacks
+* Fixed minor overlooked bugs
 = 1.6.4 =
 * hotfix: global post for snippet query
-* hotfix: Fixed non-categorized item reviewed schema, and itemreviewed and author defaults
+* hotfix: Fixed non-categorized item reviewed schema,  and itemreviewed and author defaults
 * hotfix: Widget dependency on deprecated code.
 * Added "all" value for both snippet and show shortcodes
 * Altered and fixed aggregate category query

@@ -3,7 +3,7 @@
 Plugin Name: Rich Reviews
 Plugin URI: http://nuancedmedia.com/wordpress-rich-reviews-plugin/
 Description: Rich Reviews empowers you to easily capture user reviews and display them on your wordpress page or post and in Google Search Results as a Google Rich Snippet.
-Version: 1.6.4
+Version: 1.6.5
 Author: Nuanced Media
 Author URI: http://nuancedmedia.com/
 Text Domain: rich-reviews
@@ -135,6 +135,11 @@ class RichReviews {
 			$curr_version = str_replace('.', '', $current_version);
 			$new_version = str_replace('.', '', $newest_version);
 
+			//Update to initialize new options with default values
+			if(intval($curr_version) > 160 ) {
+				$this->options->force_update();
+			}
+
 			if (($new_version != $curr_version) || ($newest_version == '1.0')) {
 				$this->admin->update_option(array('version' => $newest_version));
 			}
@@ -150,7 +155,7 @@ class RichReviews {
 	}
 
 	function set_display_filters() {
-		add_action('rr_do_review_content', 'do_review_body', 3);
+		add_action('rr_do_review_content', 'do_review_body', 4);
 		if($this->rr_options['display_full_width']) {
 			add_action('rr_do_review_wrapper', 'full_width_wrapper');
 		}	else {
@@ -161,10 +166,15 @@ class RichReviews {
 		} else {
 			add_action('rr_do_review_content', 'do_hidden_post_title', 1);
 		}
-		if($this->rr_options['show_date']) {
-			add_action('rr_do_review_content', 'do_the_date', 2);
+		if($this->rr_options['rich_include_url']) {
+			add_action('rr_do_review_content', 'do_url_schema', 2);
 		} else {
-			add_action('rr_do_review_content', 'do_the_date_hidden', 2);
+			add_action('rr_do_review_content', 'omit_url_schema', 2);
+		}
+		if($this->rr_options['show_date']) {
+			add_action('rr_do_review_content', 'do_the_date', 3);
+		} else {
+			add_action('rr_do_review_content', 'do_the_date_hidden', 3);
 		}
 		if($this->rr_options['credit_permission']) {
 			add_action('rr_close_testimonial_group', 'print_credit');
