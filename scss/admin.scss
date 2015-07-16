@@ -1,0 +1,33 @@
+
+.wp-admin {
+	/**
+	 * Options Page
+	 */
+
+	#rr-admin-options-form {
+		input, select {
+			margin: 5px;
+		}
+		input[type='checkbox'] {
+			margin-right: 20px;
+		}
+	}
+
+
+	/**
+	 * Add/Edit Review Page
+	 */
+	.form_table {
+		margin: 0 auto;
+
+		.rr_form_heading {
+			font-weight: 900;
+		}
+		.rr_required:after {
+			content: " *";
+			color: #ad3d3d;
+		}
+	}
+
+
+}
