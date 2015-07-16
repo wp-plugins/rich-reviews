@@ -122,27 +122,11 @@ class RichReviews {
 
 		// New checks. perhaps inefficient but more future-proof
 		if ($current_version != $newest_version) {
-			$sanitycheck = 0;
-			$current_version_string = $current_version;
-			$newest_version_string = $newest_version;
-			while ($sanitycheck < 100 && strlen($current_version_string) != 5) { $current_version_string .= '.0'; $sanitycheck++; }
-			while ($sanitycheck < 100 && strlen($newest_version_string) != 5) { $newest_version_string .= '.0'; $sanitycheck++; }
-			if ($sanitycheck >= 100) { // something has gone horribly wrong, let's just quit.
-				return FALSE;
-			}
-
-			// Okay let's start the version comparing
-			$curr_version = str_replace('.', '', $current_version);
-			$new_version = str_replace('.', '', $newest_version);
-
 			//Update to initialize new options with default values
-			if(intval($curr_version) > 160 ) {
+			if(version_compare($newest_version, '1.6.0') == 1) {
 				$this->options->force_update();
 			}
-
-			if (($new_version != $curr_version) || ($newest_version == '1.0')) {
-				$this->admin->update_option(array('version' => $newest_version));
-			}
+			$this->admin->update_option(array('version' => $newest_version));
 		}
 	}
 

@@ -50,6 +50,7 @@ Visit <a href="http://plugins.nuancedmedia.com/wordpress-reviews-plugin/">Rich R
 == Changelog ==
 
 = 1.6.5 =
+* hotfix: removed obsolete support for 1.0 - 1.2 version updates
 * Added Rich Markup options for author and subject fallbacks
 * Fixed minor overlooked bugs
 = 1.6.4 =
